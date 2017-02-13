@@ -38,6 +38,8 @@ In addition to Python 3, pydailystrips requires the following Python modules:
 * Pillow
 * requests
 
+pydailystrips assumes that you're running it on a system which supports symlinks.
+
 USAGE
 -----
 
