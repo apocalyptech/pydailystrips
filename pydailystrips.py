@@ -444,19 +444,16 @@ class Collection(object):
     Our complete collection of strips
     """
 
-    def __init__(self, args):
+    def __init__(self, useragent, configfile, verbose=False):
         """
-        Constructor.  This is a bit lazy, but 'args' should be the parsed
-        arguments from ConfigParser, or at least something which defines
-        `verbose`, `useragent`, `basedir`, and `config` options.
+        Constructor.
         """
-        self.verbose = args.verbose
-        self.useragent = args.useragent
-        self.basedir = args.basedir
+        self.verbose = verbose
+        self.useragent = useragent
         self.strips = {}
         self.groups = {}
         self.now = datetime.date.today()
-        self.load_from_filename(args.config)
+        self.load_from_filename(configfile)
 
         # Load in our Jinja2 template
         env = jinja2.Environment(loader=jinja2.FileSystemLoader(os.path.dirname(__file__)))
@@ -604,25 +601,25 @@ class Collection(object):
         self.list_strips()
         self.list_groups()
 
-    def process_strips(self, strips, download=False):
+    def process_strips(self, strips, download_dir=None):
         """
         Fetches and prints the strips
         """
         for strip in strips:
             strip.fetch_html(verbose=self.verbose, useragent=self.useragent)
-            if download:
+            if download_dir:
                 if not strip.error:
                     strip.download(verbose=self.verbose, useragent=self.useragent,
-                        basedir=self.basedir, now=self.now)
+                        basedir=download_dir, now=self.now)
             else:
                 strip.print_strip_info()
 
         # Finally, if we've been told to download, generate our HTML
-        if download:
+        if download_dir:
             cur_filename = 'dailystrips-%04d.%02d.%02d.html' % (self.now.year, self.now.month, self.now.day)
             yesterday = self.now - datetime.timedelta(days=1)
             prev_filename = 'dailystrips-%04d.%02d.%02d.html' % (yesterday.year, yesterday.month, yesterday.day)
-            prev_filename_full = os.path.join(self.basedir, prev_filename)
+            prev_filename_full = os.path.join(download_dir, prev_filename)
             if not os.path.exists(prev_filename_full):
                 prev_filename = None
 
@@ -643,14 +640,14 @@ class Collection(object):
             # be.
             if self.verbose:
                 print('Writing current dailystrips index to: %s' % (cur_filename))
-            full_filename = os.path.join(self.basedir, cur_filename)
+            full_filename = os.path.join(download_dir, cur_filename)
             if os.path.exists(full_filename):
                 os.unlink(full_filename)
             with open(full_filename, 'w') as df:
                 df.write(page_content)
 
             # Symlink a new index.html
-            index_filename = os.path.join(self.basedir, 'index.html')
+            index_filename = os.path.join(download_dir, 'index.html')
             if os.path.exists(index_filename):
                 os.unlink(index_filename)
             os.symlink(cur_filename, index_filename)
@@ -665,21 +662,21 @@ class Collection(object):
                 with open(prev_filename_full, 'w') as df:
                     df.write(prev_content.replace('<!--nextday-->', ' | <a href="%s">Next day</a>' % (cur_filename)))
 
-    def process_strip_id(self, strip_id, download=False):
+    def process_strip_id(self, strip_id, download_dir=None):
         """
         Prints the specified strip ID
         """
         if strip_id not in self.strips:
             raise Exception('Strip "%s" is not known' % (strip_id))
-        self.process_strips([self.strips[strip_id]], download)
+        self.process_strips([self.strips[strip_id]], download_dir)
 
-    def process_group_id(self, group_id, download=False):
+    def process_group_id(self, group_id, download_dir=None):
         """
         Prints the specified group
         """
         if group_id not in self.groups:
             raise Exception('Group "%s" is not known' % (group_id))
-        self.process_strips(self.groups[group_id].strips, download)
+        self.process_strips(self.groups[group_id].strips, download_dir)
 
 if __name__ == '__main__':
 
@@ -705,12 +702,9 @@ if __name__ == '__main__':
         help='List available strips/groups')
 
     parser.add_argument('-d', '--download',
-        action='store_true',
-        help='Download the specified strips rather than showing on STDOUT')
-
-    parser.add_argument('-b', '--basedir',
         type=str,
-        help='Base directory to use while saving (required if --download specified)')
+        metavar='DOWNLOAD_DIR',
+        help='Download the specified strips into this directory, rather than showing on STDOUT')
 
     parser.add_argument('-v', '--verbose',
         action='store_true',
@@ -728,18 +722,17 @@ if __name__ == '__main__':
 
     args = parser.parse_args()
 
-    if args.download and not args.basedir:
-        parser.error('--basedir is required when --download is specified')
-
     if not os.path.exists(args.config):
         parser.error('Config file "%s" does not exist' % (args.config))
 
-    if args.download and args.basedir and not os.path.exists(args.basedir):
-        parser.error('Base directory "%s" does not exist' % (args.basedir))
+    if args.download and not os.path.exists(args.download):
+        parser.error('Download directory "%s" does not exist' % (args.download))
 
     # Now launch the app
 
-    collection = Collection(args)
+    collection = Collection(useragent=args.useragent,
+        configfile=args.config,
+        verbose=args.verbose)
     if args.list:
         collection.list_all()
     elif args.strip:

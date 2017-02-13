@@ -45,7 +45,7 @@ USAGE
 
 Complete `--help` output:
 
-    usage: pydailystrips.py [-h] (-s STRIP | -g GROUP | -l) [-d] [-b BASEDIR] [-v]
+    usage: pydailystrips.py [-h] (-s STRIP | -g GROUP | -l) [-d DOWNLOAD_DIR] [-v]
                             [-c CONFIG] [-u USERAGENT]
 
     optional arguments:
@@ -55,11 +55,9 @@ Complete `--help` output:
       -g GROUP, --group GROUP
                             Group to process (default: None)
       -l, --list            List available strips/groups (default: False)
-      -d, --download        Download the specified strips rather than showing on
-                            STDOUT (default: False)
-      -b BASEDIR, --basedir BASEDIR
-                            Base directory to use while saving (required if
-                            --download specified) (default: None)
+      -d DOWNLOAD_DIR, --download DOWNLOAD_DIR
+                            Download the specified strips into this directory,
+                            rather than showing on STDOUT (default: None)
       -v, --verbose         Verbose output (for debugging purposes) (default:
                             False)
       -c CONFIG, --config CONFIG
@@ -110,9 +108,9 @@ as an option - you'll get the results of the regex searches at the bottom:
 
 To download all specified scripts into a directory (which also creates an
 HTML page inlining all the strips, and symlinks `index.html` to the new
-page), specify both `-d` and `-b`:
+page), specify `-d` or `--download`:
 
-    $ ./pydailystrips.py -g cj -d -b /var/www/htdocs/dailystrips
+    $ ./pydailystrips.py -g cj -d /var/www/htdocs/dailystrips
 
 TODO
 ----
