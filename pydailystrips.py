@@ -1,4 +1,4 @@
-#!/home/pez/virtualenv/dailystrips/bin/python
+#!/usr/bin/env python3
 # vim: set expandtab tabstop=4 shiftwidth=4:
 # 
 # Copyright (c) 2017, CJ Kucera
