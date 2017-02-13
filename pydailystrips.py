@@ -233,7 +233,8 @@ class Strip(object):
 
     def __init__(self, strip_id, name=None, artist=None,
             homepage=None, searchpage=None,
-            searchpattern=None, baseurl=''):
+            searchpattern=None, baseurl='',
+            width=None):
         self.strip_id = strip_id
         self.name = name
         self.artist = artist
@@ -246,6 +247,7 @@ class Strip(object):
         self.patterns.append(Pattern(title='Main Strip',
             pattern=searchpattern, mode=Pattern.M_IMG))
         self.baseurl = baseurl
+        self.width = width
         self.error = None
         self.fetch_attempted = False
 
@@ -384,6 +386,8 @@ class Strip(object):
         print("\tHomepage: %s" % (self.homepage))
         print("\tSearch Page: %s" % (self.searchpage))
         print("\tBase URL: %s" % (self.baseurl))
+        if self.width:
+            print("\tForce output width to: %s" % (self.width))
         for pattern in self.patterns:
             print("\t%s pattern (%s): %s" % (pattern.title, Pattern.MODE_TXT[pattern.mode],
                 pattern.pattern))
@@ -535,6 +539,8 @@ class Collection(object):
                                 cur_strip.set_searchpattern(parts[1])
                             elif parts[0] == 'baseurl':
                                 cur_strip.baseurl = parts[1].rstrip()
+                            elif parts[0] == 'width':
+                                cur_strip.width = parts[1].rstrip()
                             elif parts[0] == 'extra_txt' or parts[0] == 'extra_img':
                                 if parts[0] == 'extra_txt':
                                     mode = Pattern.M_TEXT

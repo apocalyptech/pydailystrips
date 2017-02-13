@@ -13,6 +13,7 @@
 #    searchpage http://www.foo.com/current/
 #    searchpattern img src="(/comic/\d+\.png)"
 #    baseurl http://imgs.foo.com
+#    width 900
 #    extra_txt Title Text|title="(.*?)"
 #    extra_img Other Image|img src="(/other/\d+\.png)"
 # end
@@ -23,17 +24,66 @@
 #
 # Required fields are: name, homepage, searchpattern.
 #
-# If not specified, searchpage will default to homepage.
+# Field definitions:
 #
-# If not specified, baseurl will default to an empty string, so
-# make sure that the regex specified in searchpattern includes
-# the full URL.
+#   name (required)
+#       The english name of the strip.  Will be printed above the
+#       comic image.  Also used as the name of the directory to store
+#       images in, when downloading.
 #
-# The magic string $homepage can be used for the "baseurl" field
-# to specify that the homepage should be used as the base URL.
+#   artist
+#       Artist name(s), just used when printing the comic header in
+#       the HTML output.
 #
-# Currently, baseurl is applied to any extra_img as well - there is
-# no current way to specify a different baseurl for the extras.
+#   homepage (required)
+#       Homepage of the strip, will be used in the link on the
+#       comic header.
+#
+#   searchpage
+#       The page to actually search for the comic in.  If unspecified,
+#       this will default to the homepage.
+#
+#   searchpattern (required)
+#       This is the regex used to find the strip inside the searchpage.
+#       The regex must contain at least one group (using parentheses),
+#       and the result will be taken from the first group.  (Having more
+#       than one is pointless, since we only look at the first, though
+#       there's nothing stopping you from having as many as you like.)
+#
+#   baseurl
+#       Prefix to append to the results found by searchpattern.  By
+#       default this is a blank string, so if you don't specify baseurl,
+#       the searchpattern's group should match a fully-qualified URL.
+#       The magic string $homepage can be used, to specify that the
+#       homepage should be used as the base URL.
+#
+#   width
+#       On output, when downloading, the main comic image will be
+#       told to appear at this width.  Currently just used for Diesel
+#       Sweeties, since its image is far larger than any other comic
+#       I use, so it seems out of place otherwise.  The image itself
+#       is not resized in any way; it's just told to be this width
+#       in HTML.
+#
+#   extra_txt
+#       This is most commonly used to find "title text" attached to
+#       an image.  This is pipe-delimited - the lefthand side will
+#       be the label, and the righthand side is another regex to match.
+#       This will be displayed below the main comic.  You can specify
+#       as many of these as you like, and they will appear in the order
+#       they're defined in.
+#
+#   extra_img
+#       This is a method to load a secondary image alongside the main
+#       comic.  It is pipe-delimited - the lefthand side will
+#       be the label, and the righthand side is another regex to match.
+#       The image will have the main "baseurl" prepended to it - there is
+#       currently no way to use a different baseurl between the main comic
+#       and any extras.  This will also ignore the "width" option.
+#       This will be displayed below the main comic.  You can specify
+#       as many of these as you like, and they will appear in the order
+#       they're defined in.  Currently only used for SMBC Comics, which
+#       has a second graphic called the "votey."
 #
 # A "group" stanza looks like this:
 #
@@ -138,6 +188,7 @@ strip dieselsweeties
     homepage http://dieselsweeties.com
     searchpattern <img class="xomic".+?src="(/strips\d+/ds\d+\.(png|gif|jpg))"
     baseurl $homepage
+    width 900
 end
 
 strip dinosaur

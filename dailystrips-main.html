@@ -33,7 +33,12 @@
                         <b>[{{ pattern.error }}]</b>
                     {% else -%}
                         {% if pattern.mode == 1 -%}
-                            <br /><img src="{{ pattern.filename }}" alt="{{ strip.name }} - {{ pattern.title }}">
+                            <br />
+                            {% if loop.first and strip.width %}
+                                <a href="{{ pattern.filename }}"><img src="{{ pattern.filename }}" alt="{{ strip.name }} - {{ pattern.title }}" width="{{ strip.width }}" border="0"></a>
+                            {% else %}
+                                <img src="{{ pattern.filename }}" alt="{{ strip.name }} - {{ pattern.title }}">
+                            {% endif %}
                         {% else -%}
                             <i>{{ pattern.result }}</i>
                         {% endif -%}
