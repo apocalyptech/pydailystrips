@@ -1,0 +1,273 @@
+# Comic strip download configuration file!
+#
+# Whitespace on both sides of each line is ignored, so indentation
+# is only for human purposes.  Lines whose first real char is a hash
+# will be ignored (ie: comments). 
+#
+# A "strip" stanza with all options defined looks like:
+#
+# strip foo
+#    name Comic Foo
+#    artist Artist Name
+#    homepage http://www.foo.com/
+#    searchpage http://www.foo.com/current/
+#    searchpattern img src="(/comic/\d+\.png)"
+#    baseurl http://imgs.foo.com
+#    extra_txt Title Text|title="(.*?)"
+#    extra_img Other Image|img src="(/other/\d+\.png)"
+# end
+#
+# Any trailing whitespace on the "searchpattern" or "extra_*"
+# lines will NOT be stripped, since that might actually be part
+# of the pattern you are trying to match.
+#
+# Required fields are: name, homepage, searchpattern.
+#
+# If not specified, searchpage will default to homepage.
+#
+# If not specified, baseurl will default to an empty string, so
+# make sure that the regex specified in searchpattern includes
+# the full URL.
+#
+# The magic string $homepage can be used for the "baseurl" field
+# to specify that the homepage should be used as the base URL.
+#
+# Currently, baseurl is applied to any extra_img as well - there is
+# no current way to specify a different baseurl for the extras.
+#
+# A "group" stanza looks like this:
+#
+# group frotz
+#     strip1
+#     strip2
+#     strip3
+#     ...
+# end
+#
+# Each entry in the group should correspond to the ID of the strips
+# specified after the "strip" directive.
+#
+# NOTE: A strip with an ID of "end" cannot be set as part of a group!
+#
+# NOTE: Strip and group names are always converted to lowercase in
+# the code.
+
+group cj
+    achewood
+    alicegrove
+    basicinstructions
+    blindsprings
+    businesscat
+    buttersafe
+    calvinandhobbes
+    dieselsweeties
+    dinosaur
+    foxtrot
+    indexed
+    marriedtothesea
+    nedroid
+    poorlydrawnlines
+    questionablecontent
+    redmeat
+    sinfest
+    sfam
+    smbc
+    toothpastefordinner
+    vagrant
+    wondermark
+    xkcd
+    zits
+end
+
+strip achewood
+    name Achewood
+    artist Chris Onstad
+    homepage http://www.achewood.com
+    searchpattern (/comic.php\?date=\d+)"
+    baseurl $homepage
+    extra_txt Title Text|<img src.*title="(.*?)"
+end 
+
+strip alicegrove
+    name Alice Grove
+    artist Jeph Jacques
+    homepage http://www.alicegrove.com/
+    searchpattern img src="(http://\S+\.media\.tumblr\.com/[0-9a-f]+/tumblr_\S+_1280\.(jpg|gif|png))"
+end
+
+strip basicinstructions 
+    name Basic Instructions 
+    artist Scott Meyer
+    homepage http://www.basicinstructions.net/
+    searchpattern src="(https://static1.squarespace.com.*?/)"
+end
+
+strip blindsprings
+    name Blindsprings
+    artist Kadi Fedoruk
+    homepage http://blindsprings.com/
+    searchpattern <div id="cc-comicbody"><img title=".*?" src="(http://www.blindsprings.com/comics/\d+-TB_.*?\.(jpg|gif|png))" id="cc-comic"
+end 
+
+strip businesscat
+    name The Adventures of Business Cat
+    artist Tom Fonder
+    homepage http://www.businesscat.happyjar.com/
+    searchpattern img src="(http://www.businesscat.happyjar.com/wp-content/uploads/\d+/\d+/\d+-\d+-\d+-\S+\.(jpg|gif|png))"
+end
+
+strip buttersafe
+    name Buttersafe
+    artist Alex Culang and Raynato Castro
+    homepage http://buttersafe.com/
+    searchpattern <img src="http://buttersafe.com/(comics/\d+-\d+-\d+-.*?\.(gif|jpg|png))"
+    baseurl $homepage
+end
+
+strip calvinandhobbes
+    name Calvin and Hobbes
+    artist Bill Watterson
+    homepage http://www.gocomics.com/calvinandhobbes/
+    searchpattern src="http://assets.amuniversal.com/(.*?)"
+    baseurl http://assets.amuniversal.com/
+end
+
+strip dieselsweeties 
+    name Diesel Sweeties
+    artist rstevens
+    homepage http://dieselsweeties.com
+    searchpattern <img class="xomic".+?src="(/strips\d+/ds\d+\.(png|gif|jpg))"
+    baseurl $homepage
+end
+
+strip dinosaur
+    name Dinosaur Comics
+    artist Ryan North
+    homepage http://www.qwantz.com/index.php
+    searchpattern <img src="http://www.qwantz.com/(comics/comic.*?\.png)"
+    baseurl http://www.qwantz.com/
+end
+
+strip foxtrot
+    name Foxtrot
+    artist Bill Amend
+    homepage http://www.gocomics.com/foxtrot
+    searchpattern <img.*? src="(http://assets.amuniversal.com/[0-9a-f].+?)"
+end
+
+strip indexed
+    name Indexed
+    artist Jessica Hagy
+    homepage http://thisisindexed.com/
+    searchpage http://thisisindexed.com/feed/
+    searchpattern <img.+?srcset=.+? http://thisisindexed.com/(wp-content/uploads/\d+/\d+/card\d+\.(jpg|gif|png))
+    baseurl $homepage
+end
+
+strip marriedtothesea
+    name Married To The Sea
+    artist Drew Fairweather and Natalie Dee
+    homepage http://www.marriedtothesea.com/
+    searchpattern <img src="http://marriedtothesea.com/(\d{6}/.*?\.gif)"
+    baseurl $homepage
+end 
+
+strip nedroid
+    name Nedroid 
+    artist Anthony Clark
+    homepage http://nedroid.com/
+    searchpattern <img src=".*?//nedroid.com/(comics/\d+-\d+-\d+-.*?\.(png|jpg|gif))" alt=
+    baseurl $homepage
+    extra_txt Title Text|img src=.*title="(.*?)"
+end 
+
+strip poorlydrawnlines
+    name Poorly Drawn Lines
+    artist Reza Farazmand
+    homepage http://poorlydrawnlines.com/
+    searchpattern <img class=".+?size-full.+?src="(http://poorlydrawnlines.com/wp-content/uploads/\d+/\d+/[0-9A-Za-z_\-]+\.png)" alt=
+end
+
+strip questionablecontent
+    name Questionable Content
+    artist Jeph Jacques
+    homepage http://www.questionablecontent.net
+    searchpattern <img.+?src="http://www.questionablecontent.net(/comics/\d+\.(png|gif|jpg))"
+    baseurl $homepage
+end
+
+strip redmeat
+    name Redmeat
+    artist Max Cannon
+    homepage http://www.redmeat.com/max-cannon/FreshMeat
+    searchpattern img src="(https?://media\d+.fdncms.com/redmeat/imager/u/redmeat/\d+/.*?-\d+-\d+-\d+\.(gif|jpg|png))"
+end
+
+strip sinfest
+    name Sinfest
+    artist Tatsuya Ishida
+    homepage http://sinfest.net/
+    baseurl $homepage 
+    searchpattern <img src="(btphp/comics/\d{4}-\d{2}-\d{2}\.gif)"
+end
+
+strip smbc
+    name SMBC Comics
+    artist Zach Weinersmith
+    homepage http://www.smbc-comics.com/
+    searchpattern (comics/[0-9-]+( \(\d+\))?\.(gif|jpg|png))"
+    baseurl $homepage
+    extra_txt Title Text|img title="(.*?)"
+    extra_img Votey|(comics/[0-9-]+( \(\d+\))?after\.(gif|jpg|png))'
+end
+
+strip sfam
+    name Scenes From A Multiverse
+    artist Jon Rosenberg
+    homepage http://amultiverse.com/
+    searchpage http://amultiverse.com/feed/
+    searchpattern src="http://amultiverse.com/(wp-content/uploads/\d+/\d+/.*?\.(gif|jpg|png))"
+    baseurl $homepage
+end
+
+strip toothpastefordinner
+    name Toothpaste For Dinner
+    artist Drew Fairweather
+    homepage http://www.toothpastefordinner.com/
+    searchpattern <img src="http://toothpastefordinner.com/(\d{6}/.*?\.(gif|jpg|png))"
+    baseurl $homepage
+end
+
+strip vagrant
+    name Hark!  A Vagrant
+    artist Kate Beaton
+    homepage http://www.harkavagrant.com/
+    searchpattern <img src="http://www.harkavagrant.com/(.+/.+\.(gif|jpg|png))" title
+    baseurl $homepage
+end
+
+strip wondermark
+    name Wondermark
+    artist David Malki
+    homepage http://www.wondermark.com/
+    searchpage http://feeds.feedburner.com/wondermark
+    searchpattern <img src="http://wondermark.com/(c/\d+-\d+-\d+-.*?)"
+    baseurl http://www.wondermark.com/
+    extra_txt Title Text|<img src="http://wondermark.com/c/\d+-\d+-\d+-.*?" alt="(.*?)"
+end 
+
+strip xkcd
+    name xkcd
+    artist Randall Munroe
+    homepage http://www.xkcd.com/
+    searchpattern src="//imgs.xkcd.com(/comics/.*?\.(png|jpg|gif))"
+    baseurl http://imgs.xkcd.com
+    extra_txt Title Text|<img src=.*title="(.*?)"
+end
+
+strip zits
+    name Zits
+    artist Jerry Scott and Jim Borgman
+    homepage http://zitscomics.com/
+    searchpattern img src="(https://safr.king.*?)"
+end
