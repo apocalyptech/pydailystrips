@@ -16,6 +16,7 @@
 #    width 900
 #    extra_txt Title Text|title="(.*?)"
 #    extra_img Other Image|img src="(/other/\d+\.png)"
+#    onhold
 # end
 #
 # Any trailing whitespace on the "searchpattern" or "extra_*"
@@ -85,6 +86,14 @@
 #       they're defined in.  Currently only used for SMBC Comics, which
 #       has a second graphic called the "votey."
 #
+#   onhold
+#       This will prevent the comic from being displayed if it hasn't
+#       changed since the previous strip.  This is intended to be used
+#       for strips which update very infrequently, or are on temporary
+#       hold for an extended period of time.  This way pydailystrips
+#       still checks for updates but doesn't clutter the index page
+#       with the same strip day after day.
+#
 # A "group" stanza looks like this:
 #
 # group frotz
@@ -136,6 +145,7 @@ strip achewood
     searchpattern (/comic.php\?date=\d+)"
     baseurl $homepage
     extra_txt Title Text|<img src.*title="(.*?)"
+    onhold
 end 
 
 strip alicegrove
@@ -295,6 +305,7 @@ strip vagrant
     homepage http://www.harkavagrant.com/
     searchpattern <img src="http://www.harkavagrant.com/(.+/.+\.(gif|jpg|png))" title
     baseurl $homepage
+    onhold
 end
 
 strip wondermark

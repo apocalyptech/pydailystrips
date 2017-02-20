@@ -71,6 +71,7 @@ class Pattern(object):
         self.result = None
         self.error = None
         self.filename = None
+        self.unchanged_since = None
 
     def search_page(self, pagedata, verbose=False):
         """
@@ -205,8 +206,18 @@ class Pattern(object):
                         #      one level anyway.
                         real_file = os.readlink(last_filename)
                         os.symlink(real_file, img_filename)
+                        self.unchanged_since = real_file
                     else:
                         os.symlink(last_filename_base, img_filename)
+                        self.unchanged_since = last_filename_base
+
+            # If we have self.unchanged_since at this point, it's a filename.  Turn
+            # it into a datetime object.
+            if self.unchanged_since:
+                filename_parts = self.unchanged_since.split('-')
+                self.unchanged_since = datetime.date(int(filename_parts[0]),
+                    int(filename_parts[1]),
+                    int(filename_parts[2]))
 
             if write_file:
                 # Write out our new file
@@ -234,7 +245,7 @@ class Strip(object):
     def __init__(self, strip_id, name=None, artist=None,
             homepage=None, searchpage=None,
             searchpattern=None, baseurl='',
-            width=None):
+            width=None, onhold=False):
         self.strip_id = strip_id
         self.name = name
         self.artist = artist
@@ -250,6 +261,8 @@ class Strip(object):
         self.width = width
         self.error = None
         self.fetch_attempted = False
+        self.onhold = onhold
+        self.unchanged_since = None
 
     def set_homepage(self, homepage):
         """
@@ -272,6 +285,24 @@ class Strip(object):
         """
         pattern = Pattern(title=title, pattern=pattern, mode=mode)
         self.patterns.append(pattern)
+
+    def unchanged_since_human(self):
+        """
+        Returns a human representation of our 'unchanged since' var
+        """
+        if self.unchanged_since:
+            return self.unchanged_since.strftime('%A, %B %d, %Y')
+        else:
+            return 'n/a'
+
+    def unchanged_since_link(self):
+        """
+        Returns a link to the day we've last been updated
+        """
+        if self.unchanged_since:
+            return self.unchanged_since.strftime('dailystrips-%Y.%m.%d.html')
+        else:
+            return 'index.html'
 
     def finish(self):
         """
@@ -348,6 +379,8 @@ class Strip(object):
                 referer=self.searchpage,
                 verbose=verbose,
                 useragent=useragent)
+            if not self.unchanged_since and pattern.unchanged_since:
+                self.unchanged_since = pattern.unchanged_since
 
     def valid(self):
         """
@@ -381,6 +414,8 @@ class Strip(object):
         Prints out our strip information
         """
         print('%s: %s' % (self.strip_id, self.name))
+        if self.onhold:
+            print("\t(marked as 'on hold')")
         if self.artist is not None:
             print("\tArtist: %s" % (self.artist))
         print("\tHomepage: %s" % (self.homepage))
@@ -525,7 +560,10 @@ class Collection(object):
                                 cur_strip.invalid_reason()))
                     else:
                         if len(parts) == 1:
-                            self.load_error(filename, idx, line, 'Missing option data')
+                            if parts[0] == 'onhold':
+                                cur_strip.onhold = True
+                            else:
+                                self.load_error(filename, idx, line, 'Missing option data')
                         else:
                             if parts[0] == 'name':
                                 cur_strip.name = parts[1].rstrip()
@@ -653,6 +691,8 @@ class Collection(object):
                 df.write(page_content)
 
             # Symlink a new index.html
+            if self.verbose:
+                print('Symlinking index.html to %s' % (cur_filename))
             index_filename = os.path.join(download_dir, 'index.html')
             if os.path.exists(index_filename):
                 os.unlink(index_filename)

@@ -26,6 +26,8 @@
 		<td>
             {% if strip.error -%}
                 <b>[{{ strip.error }}]</b>
+            {% elif strip.onhold and strip.unchanged_since %}
+                <i>(Unchanged since <a href="{{ strip.unchanged_since_link() }}">{{ strip.unchanged_since_human() }}</a>)</i>
             {% else -%}
                 {% for pattern in strip.patterns -%}
                     {% if not loop.first %}{{ pattern.title }}:{% endif %}
