@@ -119,10 +119,12 @@ group cj
     businesscat
     buttersafe
     calvinandhobbes
+    darkscience
     dieselsweeties
     dinosaur
     foxtrot
     indexed
+    jsph
     marriedtothesea
     nedroid
     poorlydrawnlines
@@ -192,6 +194,15 @@ strip calvinandhobbes
     baseurl http://assets.amuniversal.com/
 end
 
+strip darkscience
+    name Dark Science
+    artist Aaron Diaz
+    homepage http://dresdencodak.com/
+    searchpage http://dresdencodak.com/feed/
+    searchpattern <img.*src="(http://(www\.)?dresdencodak.com/wp-content/uploads/\d+/\d+/\d+-\d+-\d+-dark_science_.*\.(jpg|png|gif))"
+    onhold
+end
+
 strip dieselsweeties 
     name Diesel Sweeties
     artist rstevens
@@ -223,6 +234,15 @@ strip indexed
     searchpage http://thisisindexed.com/feed/
     searchpattern <img.+?srcset=.+? http://thisisindexed.com/(wp-content/uploads/\d+/\d+/card\d+\.(jpg|gif|png))
     baseurl $homepage
+end
+
+strip jsph
+    name Junior Scientist Power Hour
+    artist Abby Howard
+    homepage https://www.jspowerhour.com/
+    baseurl https://assets.jspowerhour.com
+    searchpattern <img.* id="comic-img" src="//assets.jspowerhour.com(.*?)"
+    onhold
 end
 
 strip marriedtothesea
