@@ -195,6 +195,10 @@ class Pattern(object):
                     write_file = False
                     if verbose:
                         print('    Previous strip is the same, just symlinking')
+                    # If the image file already exists, remove it, or else we'll get an
+                    # error
+                    if os.path.exists(img_filename):
+                        os.unlink(img_filename)
                     if os.path.islink(last_filename):
                         # We *could*, if we were sufficiently motivated, ensure that
                         # we follow a potential symlink chain all the way back to a
