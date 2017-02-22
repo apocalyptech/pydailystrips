@@ -299,7 +299,7 @@ strip smbc
     searchpattern (comics/[0-9-]+( \(\d+\))?\.(gif|jpg|png))"
     baseurl $homepage
     extra_txt Title Text|img title="(.*?)"
-    extra_img Votey|(comics/[0-9-]+( \(\d+\))?after\.(gif|jpg|png))'
+    extra_img Votey|(comics/[0-9-]+after( \(\d+\))?\.(gif|jpg|png))'
 end
 
 strip sfam
