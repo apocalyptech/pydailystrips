@@ -211,17 +211,29 @@ class Pattern(object):
                         real_file = os.readlink(last_filename)
                         os.symlink(real_file, img_filename)
                         self.unchanged_since = real_file
+                        if real_file[0] == '/':
+                            prev_full = real_file
+                        else:
+                            prev_full = os.path.join(os.path.dirname(last_filename), real_file)
                     else:
                         os.symlink(last_filename_base, img_filename)
                         self.unchanged_since = last_filename_base
+                        prev_full = last_filename
 
             # If we have self.unchanged_since at this point, it's a filename.  Turn
             # it into a datetime object.
             if self.unchanged_since:
-                filename_parts = self.unchanged_since.split('-')
-                self.unchanged_since = datetime.date(int(filename_parts[0]),
-                    int(filename_parts[1]),
-                    int(filename_parts[2]))
+                try:
+                    filename_parts = self.unchanged_since.split('-')
+                    self.unchanged_since = datetime.date(int(filename_parts[0]),
+                        int(filename_parts[1]),
+                        int(filename_parts[2]))
+                except Exception as e:
+                    # If the filename we found doesn't match our standard pattern,
+                    # attempt to just use the mtime of the file
+                    self.unchanged_since = datetime.datetime.fromtimestamp(os.path.getmtime(prev_full))
+                    if verbose:
+                        print('    Strip is on hold but previous filename cannot be parsed, using previous file\'s mtime')
 
             if write_file:
                 # Write out our new file
