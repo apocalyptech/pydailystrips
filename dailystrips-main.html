@@ -22,7 +22,7 @@
         {% if strip.error -%}
             <span id="strip-error-{{ strip.strip_id }}" class="strip-error">[{{ strip.error }}]</span>
         {% elif strip.onhold and strip.unchanged_since %}
-            <span id="strip-unchanged-{{ strip.strip_id }}" class="strip-unchanged">(Unchanged since <a href="{{ strip.unchanged_since_link() }}">{{ strip.unchanged_since_human() }}</a>)</span>
+            <span id="strip-unchanged-{{ strip.strip_id }}" class="strip-unchanged">(Unchanged since <a href="{{ strip.unchanged_since_link() }}#strip-header-{{ strip.strip_id }}">{{ strip.unchanged_since_human() }}</a>)</span>
         {% else -%}
             {% for pattern in strip.patterns -%}
                 <div id="strip-pattern-{{ strip.strip_id }}-{{ pattern.id }}" class="strip-pattern strip-pattern-{{ strip.strip_id }} strip-pattern-{{ pattern.id }}">
