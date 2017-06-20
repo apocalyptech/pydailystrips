@@ -102,22 +102,18 @@
 # the code.
 
 group cj
-    achewood
     alicegrove
     basicinstructions
     blindsprings
     businesscat
     buttersafe
     calvinandhobbes
-    darkscience
     dieselsweeties
     dinosaur
     foxtrot
     indexed
-    jsph
     marriedtothesea
     nedroid
-    pbf
     poorlydrawnlines
     questionablecontent
     redmeat
@@ -125,10 +121,14 @@ group cj
     sfam
     smbc
     toothpastefordinner
-    vagrant
     wondermark
     xkcd
     zits
+    achewood
+    darkscience
+    jsph
+    pbf
+    vagrant
 end
 
 strip achewood
