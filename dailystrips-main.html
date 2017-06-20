@@ -30,7 +30,7 @@
                 {% if pattern.error -%}
                     <span id="strip-pattern-error-{{ strip.strip_id }}-{{ pattern.id }}" class="strip-pattern-error strip-pattern-error-{{ strip.strip_id }} strip-pattern-error-{{ pattern.id }}">[{{ pattern.error }}]</span>
                 {% else -%}
-                    {% if pattern.mode == 1 -%}
+                    {% if pattern.is_image() -%}
                         {% if not loop.first %}<br />{% endif %}
                         <img src="{{ pattern.filename }}" alt="{{ strip.name }} - {{ pattern.title }}" id="strip-img-{{ strip.strip_id }}-{{ pattern.id }}" class="strip-img strip-img-{{ strip.strip_id }} strip-img-{{ pattern.id }}">
                     {% else -%}

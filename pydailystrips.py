@@ -103,7 +103,7 @@ class Pattern(object):
         if self.result is None:
             return None
         else:
-            if self.mode == Pattern.M_IMG:
+            if self.is_image():
                 return '%s%s' % (self.baseurl, self.result)
             else:
                 return self.result
@@ -114,13 +114,20 @@ class Pattern(object):
         """
         return '[%s]' % (self.error)
 
+    def is_image(self):
+        """
+        Convenience function to know whether we're an image or
+        a text pattern.
+        """
+        return (self.mode == Pattern.M_IMG)
+
     def download_to(self, basedir, linkdir, now, referer=None, verbose=False, useragent=None):
         """
         Downloads ourself to the given directory.
         """
 
         # Only download if we're an image
-        if self.mode != Pattern.M_IMG:
+        if not self.is_image():
             return
 
         # Also only download if we actually matched
@@ -365,7 +372,7 @@ class Strip(object):
             if pattern.search_page(page_lines, verbose):
                 if verbose:
                     print('    Found result: %s' % (pattern.result))
-                    if pattern.mode == Pattern.M_IMG:
+                    if pattern.is_image():
                         print('    Full result URL: %s' % (pattern.get_result()))
             else:
                 print('ERROR: %s (%s): %s' % (self.name, self.strip_id,
