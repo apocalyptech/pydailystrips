@@ -7,12 +7,12 @@ BODY {
     font-size: 150%;
 }
 
-.strip-header h2 {
+.strip-header {
     font-size: 120%;
-    margin-bottom: 0px;
+    margin-bottom: 1em;
 }
 
-.strip-body td {
+.strip-body {
     padding-left: 2em;
     padding-bottom: 2em;
 }
@@ -20,6 +20,10 @@ BODY {
 .strip-error, .strip-pattern-error {
     font-weight: bold;
     color: red;
+}
+
+.strip-unchanged {
+    font-style: italic;
 }
 
 .strip-pattern-title_text {
