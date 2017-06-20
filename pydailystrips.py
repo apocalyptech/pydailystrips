@@ -31,6 +31,7 @@ import re
 import io
 import sys
 import jinja2
+import shutil
 import datetime
 import argparse
 import requests
@@ -72,6 +73,9 @@ class Pattern(object):
         self.error = None
         self.filename = None
         self.unchanged_since = None
+
+        # String appropriate for inclusion in CSS classnames/IDs, filenames, etc.
+        self.id = re.sub('[^0-9a-z]', '_', self.title.lower())
 
     def search_page(self, pagedata, verbose=False):
         """
@@ -165,19 +169,16 @@ class Pattern(object):
                 print('')
             return
 
-        # Normalize our title to something a filename can use
-        image_suffix = re.sub('[^0-9a-z]', '_', self.title.lower())
-
         # Grab yesterday's date so we can check to see if that file exists, and if it's
         # the same file.
         yesterday = now - datetime.timedelta(days=1)
 
         # Format our base filenames
         img_filename_base = '%04d-%02d-%02d-%s.%s' % (now.year, now.month, now.day,
-            image_suffix, ext)
+            self.id, ext)
         img_filename = os.path.join(basedir, img_filename_base)
         last_filename_base = '%04d-%02d-%02d-%s.%s' % (yesterday.year,
-            yesterday.month, yesterday.day, image_suffix, ext)
+            yesterday.month, yesterday.day, self.id, ext)
         last_filename = os.path.join(basedir, last_filename_base)
 
         # Big ol' block here, various OS interactions.  Just try/except the whole thing.
@@ -261,7 +262,7 @@ class Strip(object):
     def __init__(self, strip_id, name=None, artist=None,
             homepage=None, searchpage=None,
             searchpattern=None, baseurl='',
-            width=None, onhold=False):
+            onhold=False):
         self.strip_id = strip_id
         self.name = name
         self.artist = artist
@@ -274,7 +275,6 @@ class Strip(object):
         self.patterns.append(Pattern(title='Main Strip',
             pattern=searchpattern, mode=Pattern.M_IMG))
         self.baseurl = baseurl
-        self.width = width
         self.error = None
         self.fetch_attempted = False
         self.onhold = onhold
@@ -437,8 +437,6 @@ class Strip(object):
         print("\tHomepage: %s" % (self.homepage))
         print("\tSearch Page: %s" % (self.searchpage))
         print("\tBase URL: %s" % (self.baseurl))
-        if self.width:
-            print("\tForce output width to: %s" % (self.width))
         for pattern in self.patterns:
             print("\t%s pattern (%s): %s" % (pattern.title, Pattern.MODE_TXT[pattern.mode],
                 pattern.pattern))
@@ -593,8 +591,6 @@ class Collection(object):
                                 cur_strip.set_searchpattern(parts[1])
                             elif parts[0] == 'baseurl':
                                 cur_strip.baseurl = parts[1].rstrip()
-                            elif parts[0] == 'width':
-                                cur_strip.width = parts[1].rstrip()
                             elif parts[0] == 'extra_txt' or parts[0] == 'extra_img':
                                 if parts[0] == 'extra_txt':
                                     mode = Pattern.M_TEXT
@@ -661,7 +657,7 @@ class Collection(object):
         self.list_strips()
         self.list_groups()
 
-    def process_strips(self, strips, download_dir=None):
+    def process_strips(self, strips, download_dir=None, css_file=None):
         """
         Fetches and prints the strips
         """
@@ -676,6 +672,20 @@ class Collection(object):
 
         # Finally, if we've been told to download, generate our HTML
         if download_dir:
+
+            # If we've been told to use a CSS file, and that CSS file is present
+            # in our program directory, and the file is NOT present in the destination
+            # directory, copy it over.
+            if css_file:
+                css_dst_filename = os.path.join(download_dir, css_file)
+                if not os.path.exists(css_dst_filename):
+                    css_src_filename = os.path.join(os.path.dirname(__file__), css_file)
+                    if os.path.exists(css_src_filename):
+                        if self.verbose:
+                            print('Copying default CSS file to: %s' % (css_dst_filename))
+                        shutil.copyfile(css_src_filename, css_dst_filename)
+
+            # Output our actual HTML
             cur_filename = 'dailystrips-%04d.%02d.%02d.html' % (self.now.year, self.now.month, self.now.day)
             yesterday = self.now - datetime.timedelta(days=1)
             prev_filename = 'dailystrips-%04d.%02d.%02d.html' % (yesterday.year, yesterday.month, yesterday.day)
@@ -688,6 +698,7 @@ class Collection(object):
                         'humandate': self.now.strftime('%A, %B %d, %Y'),
                         'yesterday': prev_filename,
                         'strips': strips,
+                        'css': css_file,
                     })
             except Exception as e:
                 page_content = 'ERROR: Could not render dailystrips template: %s' % (e)
@@ -724,21 +735,21 @@ class Collection(object):
                 with open(prev_filename_full, 'w') as df:
                     df.write(prev_content.replace('<!--nextday-->', ' | <a href="%s">Next day</a>' % (cur_filename)))
 
-    def process_strip_id(self, strip_id, download_dir=None):
+    def process_strip_id(self, strip_id, download_dir=None, css_file=None):
         """
         Prints the specified strip ID
         """
         if strip_id not in self.strips:
             raise Exception('Strip "%s" is not known' % (strip_id))
-        self.process_strips([self.strips[strip_id]], download_dir)
+        self.process_strips([self.strips[strip_id]], download_dir, css_file)
 
-    def process_group_id(self, group_id, download_dir=None):
+    def process_group_id(self, group_id, download_dir=None, css_file=None):
         """
         Prints the specified group
         """
         if group_id not in self.groups:
             raise Exception('Group "%s" is not known' % (group_id))
-        self.process_strips(self.groups[group_id].strips, download_dir)
+        self.process_strips(self.groups[group_id].strips, download_dir, css_file)
 
 if __name__ == '__main__':
 
@@ -767,6 +778,14 @@ if __name__ == '__main__':
         type=str,
         metavar='DOWNLOAD_DIR',
         help='Download the specified strips into this directory, rather than showing on STDOUT')
+
+    parser.add_argument('--css',
+        type=str,
+        metavar='CSS_FILENAME',
+        default='dailystrips-style.css',
+        help="""Use the specified CSS filename in generated HTML (only has an effect with
+            --download).  Will copy the CSS file from this directory to the project directory
+            if it doesn't already exist, but will NOT overwrite an existing CSS file.""")
 
     parser.add_argument('-v', '--verbose',
         action='store_true',
@@ -798,6 +817,6 @@ if __name__ == '__main__':
     if args.list:
         collection.list_all()
     elif args.strip:
-        collection.process_strip_id(args.strip, args.download)
+        collection.process_strip_id(args.strip, args.download, args.css)
     elif args.group:
-        collection.process_group_id(args.group, args.download)
+        collection.process_group_id(args.group, args.download, args.css)

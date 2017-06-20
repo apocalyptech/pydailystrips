@@ -45,8 +45,8 @@ USAGE
 
 Complete `--help` output:
 
-    usage: pydailystrips.py [-h] (-s STRIP | -g GROUP | -l) [-d DOWNLOAD_DIR] [-v]
-                            [-c CONFIG] [-u USERAGENT]
+    usage: pydailystrips.py [-h] (-s STRIP | -g GROUP | -l) [-d DOWNLOAD_DIR]
+                            [--css CSS_FILENAME] [-v] [-c CONFIG] [-u USERAGENT]
 
     optional arguments:
       -h, --help            show this help message and exit
@@ -58,6 +58,11 @@ Complete `--help` output:
       -d DOWNLOAD_DIR, --download DOWNLOAD_DIR
                             Download the specified strips into this directory,
                             rather than showing on STDOUT (default: None)
+      --css CSS_FILENAME    Use the specified CSS filename in generated HTML (only
+                            has an effect with --download). Will copy the CSS file
+                            from this directory to the project directory if it
+                            doesn't already exist, but will NOT overwrite an
+                            existing CSS file. (default: dailystrips-style.css)
       -v, --verbose         Verbose output (for debugging purposes) (default:
                             False)
       -c CONFIG, --config CONFIG
@@ -112,10 +117,26 @@ page), specify `-d` or `--download`:
 
     $ ./pydailystrips.py -g cj -d /var/www/htdocs/dailystrips
 
+CSS Styling
+-----------
+
+The HTML output of pydailystrips sets CSS IDs and classnames on basically all
+attributes, and it should be possible to style the page however you like.  By default
+it will copy the file `dailystrips-style.css` into the output directory, if it doesn't
+already exist, and use that for CSS.  You can specify any arbitrary filename (or URL)
+for the `--css` option and the outputted HTML will use that, instead.  The CSS you use
+need not be present in the same directory as `pydailystrips.py` itself.  pydailystrips
+will *not* overwrite CSS in the destination directory, so the CSS file in the download
+directory can be modified without fear of having it overwritten.
+
+A quick perusal of the generated HTML source and/or the bundled CSS file should give
+you an idea of what elements are available.  I believe I've got just about everything
+you'd care about in there, but let me know if I've missed anything that would be useful.
+For instance, the main strip image will have a CSS ID of `strip-img-<stripname>-main_strip`,
+and classes of `strip-img`, `strip-img-<stripname>`, and `strip-img-main_strip`.
+
 TODO
 ----
 
-* Right now I just replicated the old dailystrips HTML format for the
-  download option.  I'd like to make that a bit prettier.
 * Some kind of "archive" page would be nice - dailystrips had been linking to
   one which doesn't seem to have ever been updated...

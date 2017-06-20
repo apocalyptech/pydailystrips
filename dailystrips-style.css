@@ -1,0 +1,35 @@
+BODY {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.dailystrips-header {
+    text-align: center;
+    font-size: 150%;
+}
+
+.strip-header h2 {
+    font-size: 120%;
+    margin-bottom: 0px;
+}
+
+.strip-body td {
+    padding-left: 2em;
+    padding-bottom: 2em;
+}
+
+.strip-error, .strip-pattern-error {
+    font-weight: bold;
+    color: red;
+}
+
+.strip-pattern-title_text {
+    padding-top: .3em;
+}
+
+.strip-text-title_text {
+    font-style: italic;
+}
+
+#strip-img-dieselsweeties-main_strip {
+    max-width: 900px;
+}

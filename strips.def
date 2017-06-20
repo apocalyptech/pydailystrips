@@ -13,7 +13,6 @@
 #    searchpage http://www.foo.com/current/
 #    searchpattern img src="(/comic/\d+\.png)"
 #    baseurl http://imgs.foo.com
-#    width 900
 #    extra_txt Title Text|title="(.*?)"
 #    extra_img Other Image|img src="(/other/\d+\.png)"
 #    onhold
@@ -58,14 +57,6 @@
 #       The magic string $homepage can be used, to specify that the
 #       homepage should be used as the base URL.
 #
-#   width
-#       On output, when downloading, the main comic image will be
-#       told to appear at this width.  Currently just used for Diesel
-#       Sweeties, since its image is far larger than any other comic
-#       I use, so it seems out of place otherwise.  The image itself
-#       is not resized in any way; it's just told to be this width
-#       in HTML.
-#
 #   extra_txt
 #       This is most commonly used to find "title text" attached to
 #       an image.  This is pipe-delimited - the lefthand side will
@@ -80,11 +71,10 @@
 #       be the label, and the righthand side is another regex to match.
 #       The image will have the main "baseurl" prepended to it - there is
 #       currently no way to use a different baseurl between the main comic
-#       and any extras.  This will also ignore the "width" option.
-#       This will be displayed below the main comic.  You can specify
-#       as many of these as you like, and they will appear in the order
-#       they're defined in.  Currently only used for SMBC Comics, which
-#       has a second graphic called the "votey."
+#       and any extras.  This will be displayed below the main comic.
+#       You can specify as many of these as you like, and they will appear
+#       in the order they're defined.  Currently only used for SMBC Comics,
+#       which has a second graphic called the "votey."
 #
 #   onhold
 #       This will prevent the comic from being displayed if it hasn't
@@ -210,7 +200,6 @@ strip dieselsweeties
     homepage http://dieselsweeties.com
     searchpattern <img class="xomic".+?src="(/strips\d+/ds\d+\.(png|gif|jpg))"
     baseurl $homepage
-    width 900
 end
 
 strip dinosaur
