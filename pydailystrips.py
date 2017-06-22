@@ -512,7 +512,7 @@ class Collection(object):
         self.useragent = useragent
         self.strips = {}
         self.groups = {}
-        self.now = datetime.date.today()
+        self.now = datetime.datetime.today()
         self.load_from_filename(configfile)
 
         # Load in our Jinja2 template
@@ -703,6 +703,7 @@ class Collection(object):
             try:
                 page_content = self.template_main.render({
                         'humandate': self.now.strftime('%A, %B %d, %Y'),
+                        'timestamp_full': self.now.strftime('%c'),
                         'yesterday': prev_filename,
                         'strips': strips,
                         'css': css_file,
