@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
 
 <head>
@@ -32,7 +33,7 @@
                 {% else -%}
                     {% if pattern.is_image() -%}
                         {% if not loop.first %}<br />{% endif %}
-                        <img src="{{ pattern.filename }}" alt="{{ strip.name }} - {{ pattern.title }}" id="strip-img-{{ strip.strip_id }}-{{ pattern.id }}" class="strip-img strip-img-{{ strip.strip_id }} strip-img-{{ pattern.id }}">
+                        <img src="{{ pattern.url }}" alt="{{ strip.name }} - {{ pattern.title }}" id="strip-img-{{ strip.strip_id }}-{{ pattern.id }}" class="strip-img strip-img-{{ strip.strip_id }} strip-img-{{ pattern.id }}">
                     {% else -%}
                         <span id="strip-text-{{ strip.strip_id }}-{{ pattern.id }}" class="strip-text strip-text-{{ strip.strip_id }} strip-text-{{ pattern.id }}">{{ pattern.result }}</span>
                     {% endif -%}

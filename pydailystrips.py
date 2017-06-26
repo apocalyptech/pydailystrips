@@ -32,6 +32,7 @@ import io
 import sys
 import jinja2
 import shutil
+import urllib
 import datetime
 import argparse
 import requests
@@ -71,7 +72,7 @@ class Pattern(object):
         self.baseurl = ''
         self.result = None
         self.error = None
-        self.filename = None
+        self.url = None
         self.unchanged_since = None
 
         # String appropriate for inclusion in CSS classnames/IDs, filenames, etc.
@@ -250,8 +251,8 @@ class Pattern(object):
                 if verbose:
                     print('    Saved at %s' % (img_filename))
 
-            # Store our filename for later retrieval
-            self.filename = os.path.join(linkdir, img_filename_base)
+            # Store our URL for later retrieval
+            self.url = os.path.join(urllib.parse.quote(linkdir), img_filename_base)
 
         except Exception as e:
 
