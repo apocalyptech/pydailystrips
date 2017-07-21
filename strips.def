@@ -102,7 +102,6 @@
 # the code.
 
 group cj
-    alicegrove
     basicinstructions
     blindsprings
     businesscat
@@ -140,13 +139,6 @@ strip achewood
     extra_txt Title Text|<img src.*title="(.*?)"
     onhold
 end 
-
-strip alicegrove
-    name Alice Grove
-    artist Jeph Jacques
-    homepage http://www.alicegrove.com/
-    searchpattern img src="(http://\S+\.media\.tumblr\.com/[0-9a-f]+/tumblr_\S+_1280\.(jpg|gif|png))"
-end
 
 strip basicinstructions 
     name Basic Instructions 
