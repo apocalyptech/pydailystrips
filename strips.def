@@ -239,8 +239,7 @@ strip nedroid
     name Nedroid 
     artist Anthony Clark
     homepage http://nedroid.com/
-    searchpattern <img src=".*?//nedroid.com/(comics/\d+-\d+-\d+-.*?\.(png|jpg|gif))" alt=
-    baseurl $homepage
+    searchpattern <img src="(.*?//nedroid.*\.com/comics/\d+-\d+-\d+-.*?\.(png|jpg|gif))" alt=
     extra_txt Title Text|img src=.*title="(.*?)"
 end 
 
