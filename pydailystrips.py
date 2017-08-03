@@ -88,7 +88,11 @@ class Pattern(object):
         """
         if verbose:
             print('* Searching for "%s" pattern: %s' % (self.title, self.pattern))
-        search_re = re.compile(self.pattern)
+        try:
+            search_re = re.compile(self.pattern)
+        except Exception as e:
+            self.error = 'Error parsing regex: %s' % (e)
+            return False
         for line in pagedata:
             match = search_re.search(line)
             if match:
