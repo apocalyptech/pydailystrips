@@ -144,7 +144,7 @@ strip basicinstructions
     name Basic Instructions 
     artist Scott Meyer
     homepage http://www.basicinstructions.net/
-    searchpattern src="(https://static1.squarespace.com.*?/)"
+    searchpattern src="(https://static1.squarespace.com.*?/|https://static1.squarespace.com.*?\.(gif|jpg|png))"
 end
 
 strip blindsprings
