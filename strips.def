@@ -206,7 +206,7 @@ strip foxtrot
     name Foxtrot
     artist Bill Amend
     homepage http://www.gocomics.com/foxtrot
-    searchpattern <img.*? src="(http://assets.amuniversal.com/[0-9a-f].+?)"
+    searchpattern data-image="(http://assets.amuniversal.com/[0-9a-f].+?)"
 end
 
 strip indexed
