@@ -112,7 +112,6 @@ group cj
     foxtrot
     indexed
     marriedtothesea
-    nedroid
     poorlydrawnlines
     questionablecontent
     redmeat
@@ -125,6 +124,7 @@ group cj
     achewood
     darkscience
     jsph
+    nedroid
     pbf
     sfam
     vagrant
@@ -242,6 +242,7 @@ strip nedroid
     homepage http://nedroid.com/
     searchpattern <img src="(.*?//nedroid.*\.com/comics/\d+-\d+-\d+-.*?\.(png|jpg|gif))" alt=
     extra_txt Title Text|img src=.*title="(.*?)"
+    onhold
 end 
 
 strip pbf
