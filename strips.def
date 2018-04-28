@@ -115,6 +115,7 @@ group cj
     poorlydrawnlines
     questionablecontent
     redmeat
+    sfam
     sinfest
     smbc
     toothpastefordinner
@@ -126,7 +127,6 @@ group cj
     jsph
     nedroid
     pbf
-    sfam
     vagrant
 end
 
@@ -300,7 +300,6 @@ strip sfam
     searchpage http://amultiverse.com/feed/
     searchpattern src="http://amultiverse.com/(wp-content/uploads/\d+/\d+/.*?\.(gif|jpg|png))"
     baseurl $homepage
-    onhold
 end
 
 strip toothpastefordinner
