@@ -43,6 +43,22 @@
 #       The page to actually search for the comic in.  If unspecified,
 #       this will default to the homepage.
 #
+#   intermediate_pattern
+#       Some strip pages will require an initial regex to load the
+#       actual page containing the strip image URL (gocomics has
+#       recently changed to do this).  This is the pattern to look for
+#       in searchpage, to find the actual strip URL.
+#
+#   intermediate_relative
+#       If specified, the intermediate link found by intermediate_pattern
+#       is a relative URL which should be appended to the original
+#       searchpage URL.  Otherwise, it is taken to be an absolute URL.
+#
+#   intermediate_needs_hostname
+#       In the case of absolute (non-relative) URLs, this specifies that
+#       the intermediate URL does not specify a hostname itself, so we
+#       must take that from the original searchpage.
+#
 #   searchpattern (required)
 #       This is the regex used to find the strip inside the searchpage.
 #       The regex must contain at least one group (using parentheses),
@@ -173,8 +189,10 @@ strip calvinandhobbes
     name Calvin and Hobbes
     artist Bill Watterson
     homepage http://www.gocomics.com/calvinandhobbes/
-    searchpattern src="http://assets.amuniversal.com/(.*?)"
-    baseurl http://assets.amuniversal.com/
+    intermediate_pattern data-link="comics" href="(/calvinandhobbes/\d+/\d+/\d+)"
+    intermediate_needs_hostname
+    searchpattern src="https://assets.amuniversal.com/(.*?)"
+    baseurl https://assets.amuniversal.com/
 end
 
 strip darkscience

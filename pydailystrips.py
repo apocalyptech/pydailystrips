@@ -283,6 +283,11 @@ class Strip(object):
             self.searchpage = searchpage
         else:
             self.searchpage = homepage
+        self.intermediate_pattern = None
+        self.found_intermediate = None
+        self.intermediate_url = None
+        self.intermediate_relative = False
+        self.intermediate_needs_hostname = False
         self.patterns = []
         self.patterns.append(Pattern(title='Main Strip',
             pattern=searchpattern, mode=Pattern.M_IMG))
@@ -370,7 +375,65 @@ class Strip(object):
                 print('')
             return
         if verbose:
-            print('HTML successfully retrieved, starting on matches')
+            if self.intermediate_pattern:
+                print('HTML successfully retrieved')
+            else:
+                print('HTML successfully retrieved, starting on matches')
+
+        # If we have an intermediate pattern specified, we'll have to follow
+        # that URL.
+        if self.intermediate_pattern:
+            if verbose:
+                print('Searching for intermediate pattern: %s' % (self.intermediate_pattern))
+            try:
+                intermediate_re = re.compile(self.intermediate_pattern)
+            except Exception as e:
+                self.error = 'ERROR: Unable to compile intermedate regex: %s' % (e)
+                if verbose:
+                    print(self.error)
+                    print('')
+                return
+            for line in page_lines:
+                match = intermediate_re.search(line)
+                if match:
+                    self.found_intermediate = match.group(1)
+                    break
+
+            if not self.found_intermediate:
+                self.error = 'ERROR: Unable to find intermediate URL'
+                if verbose:
+                    print(self.error)
+                    print('')
+                    return
+
+            # Figure out what the actual intermediate URL is
+            if verbose:
+                print('Found intermediate link: %s' % (self.found_intermediate))
+            if self.intermediate_relative or self.intermediate_needs_hostname:
+                if self.intermediate_relative:
+                    self.intermediate_url = '%s%s' % (self.searchpage, self.found_intermediate)
+                elif self.intermediate_needs_hostname:
+                    parsed = urllib.parse.urlparse(self.searchpage)
+                    self.intermediate_url = '%s://%s%s' % (parsed.scheme, parsed.netloc,
+                            self.found_intermediate)
+                if verbose:
+                    print('Converted intermediate URL: %s' % (self.intermediate_url))
+            else:
+                self.intermediate_url = self.found_intermediate
+
+            if verbose:
+                print('Fetching intermediate URL: %s' % (self.intermediate_url))
+            try:
+                page_lines = requests.get(self.intermediate_url, headers=headers).text.splitlines()
+            except Exception as e:
+                self.error = 'ERROR: Unable to retrieve intermediate HTML for %s (%s) - %s: %s' % (
+                    self.name, self.strip_id, self.intermediate_url, e)
+                if verbose:
+                    print(self.error)
+                    print('')
+                return
+            if verbose:
+                print('Intermediate HTML successfully retrieved, starting on matches')
 
         # Run our matches
         for pattern in self.patterns:
@@ -449,6 +512,20 @@ class Strip(object):
         print("\tHomepage: %s" % (self.homepage))
         print("\tSearch Page: %s" % (self.searchpage))
         print("\tBase URL: %s" % (self.baseurl))
+        if self.intermediate_pattern:
+            print("\tIntermediate Pattern: %s" % (self.intermediate_pattern))
+            suffixes = []
+            if self.intermediate_relative:
+                suffixes.append('relative link')
+            elif self.intermediate_needs_hostname:
+                suffixes.append('needs hostname')
+            print("\tIntermediate Properties: %s" % (', '.join(suffixes)))
+            if len(suffixes) == 0:
+                suffixes.append('full URL')
+            if self.found_intermediate:
+                print("\tIntermediate Link: %s" % (self.found_intermediate))
+            if self.intermediate_url:
+                print("\tIntermediate URL: %s" % (self.intermediate_url))
         for pattern in self.patterns:
             print("\t%s pattern (%s): %s" % (pattern.title, Pattern.MODE_TXT[pattern.mode],
                 pattern.pattern))
@@ -588,6 +665,10 @@ class Collection(object):
                         if len(parts) == 1:
                             if parts[0] == 'onhold':
                                 cur_strip.onhold = True
+                            elif parts[0] == 'intermediate_relative':
+                                cur_strip.intermediate_relative = True
+                            elif parts[0] == 'intermediate_needs_hostname':
+                                cur_strip.intermediate_needs_hostname = True
                             else:
                                 self.load_error(filename, idx, line, 'Missing option data')
                         else:
@@ -601,6 +682,8 @@ class Collection(object):
                                 cur_strip.searchpage = parts[1].rstrip()
                             elif parts[0] == 'searchpattern':
                                 cur_strip.set_searchpattern(parts[1])
+                            elif parts[0] == 'intermediate_pattern':
+                                cur_strip.intermediate_pattern = parts[1].rstrip()
                             elif parts[0] == 'baseurl':
                                 cur_strip.baseurl = parts[1].rstrip()
                             elif parts[0] == 'extra_txt' or parts[0] == 'extra_img':
