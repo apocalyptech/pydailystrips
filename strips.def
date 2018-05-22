@@ -223,9 +223,10 @@ end
 strip foxtrot
     name Foxtrot
     artist Bill Amend
-    homepage http://www.foxtrot.com/
-    searchpage http://www.foxtrot.com/feed/
-    searchpattern img src="(.+?)"
+    homepage http://www.gocomics.com/foxtrot
+    intermediate_pattern data-link="comics" href="(/foxtrot/\d+/\d+/\d+)"
+    intermediate_needs_hostname
+    searchpattern data-image="(https://assets.amuniversal.com/[0-9a-f].+?)"
 end
 
 strip indexed
