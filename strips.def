@@ -226,8 +226,8 @@ strip dilbert
     name Dilbert
     artist Scott Adams
     homepage http://www.dilbert.com/
+    searchpage http://www.dilbert.com/
     searchpattern <img.*src="(http://assets.amuniversal.com/[0-9a-f]+)"
-    baseurl http://www.dilbert.com/
 end
 
 strip dinosaur
