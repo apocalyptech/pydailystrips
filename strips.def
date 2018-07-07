@@ -163,6 +163,16 @@ strip basicinstructions
     searchpattern src="(https://static1.squarespace.com.*?/|https://static1.squarespace.com.*?\.(gif|jpg|png))"
 end
 
+strip bc
+    name B.C.
+    artist Mastroianni & Hart
+    homepage http://www.gocomics.com/bc/
+    intermediate_pattern data-link="comics" href="(/bc/\d+/\d+/\d+)"
+    intermediate_needs_hostname
+    searchpattern src="https://assets.amuniversal.com/(.*?)"
+    baseurl https://assets.amuniversal.com/
+end
+
 strip blindsprings
     name Blindsprings
     artist Kadi Fedoruk
@@ -212,6 +222,14 @@ strip dieselsweeties
     baseurl $homepage
 end
 
+strip dilbert
+    name Dilbert
+    artist Scott Adams
+    homepage http://www.dilbert.com/
+    searchpage http://www.dilbert.com/
+    searchpattern <img.*src="(http://assets.amuniversal.com/[0-9a-f]+)"
+end
+
 strip dinosaur
     name Dinosaur Comics
     artist Ryan North
@@ -227,6 +245,25 @@ strip foxtrot
     intermediate_pattern data-link="comics" href="(/foxtrot/\d+/\d+/\d+)"
     intermediate_needs_hostname
     searchpattern data-image="(https://assets.amuniversal.com/[0-9a-f].+?)"
+end
+
+strip getfuzzy
+    name Get Fuzzy
+    artist Darby Conley
+    homepage http://www.gocomics.com/getfuzzy/
+    intermediate_pattern data-link="comics" href="(/getfuzzy/\d+/\d+/\d+)"
+    intermediate_needs_hostname
+    searchpattern src="https://assets.amuniversal.com/(.*?)"
+    baseurl https://assets.amuniversal.com/
+end
+
+strip grimmy
+    name Mother Goose and Grimm
+    artist Mike Peters
+    homepage http://www.grimmy.com/
+    searchpage http://www.grimmy.com/
+    searchpattern meta property="og:image" content="http://www.grimmy.com/(images/MGG_Archive/MGG_2\d\d\d/MGG-\d+-\d+-\d+.gif)"
+    baseurl http://www.grimmy.com/
 end
 
 strip indexed
@@ -264,12 +301,52 @@ strip nedroid
     onhold
 end 
 
+strip nonsequitur
+    name nonsequitur
+    artist Wiley Miller
+    homepage http://www.gocomics.com/nonsequitur/
+    intermediate_pattern data-link="comics" href="(/nonsequitur/\d+/\d+/\d+)"
+    intermediate_needs_hostname
+    searchpattern src="https://assets.amuniversal.com/(.*?)"
+    baseurl https://assets.amuniversal.com/
+end
+
 strip pbf
     name Perry Bible Fellowship
     artist Nicholas Gurewitch
     homepage http://pbfcomics.com/
     searchpattern <div id="comic"><img src='(https?://(www\.)?pbfcomics\.com/wp-content/uploads/\d+/\d+/PBF\d+-\S+\.(png|jpg|gif))' width
     onhold
+end
+
+strip peanuts
+    name Peanuts
+    artist Charles Schulz
+    homepage http://www.gocomics.com/peanuts/
+    intermediate_pattern data-link="comics" href="(/peanuts/\d+/\d+/\d+)"
+    intermediate_needs_hostname
+    searchpattern src="https://assets.amuniversal.com/(.*?)"
+    baseurl https://assets.amuniversal.com/
+end
+
+strip pearlsbeforeswine
+    name Pearls Before Swine
+    artist Stephan Pastis
+    homepage http://www.gocomics.com/pearlsbeforeswine/
+    intermediate_pattern data-link="comics" href="(/pearlsbeforeswine/\d+/\d+/\d+)"
+    intermediate_needs_hostname
+    searchpattern src="https://assets.amuniversal.com/(.*?)"
+    baseurl https://assets.amuniversal.com/
+end
+
+strip pickles
+    name Pickles
+    artist Brian Crane
+    homepage http://www.gocomics.com/pickles/
+    intermediate_pattern data-link="comics" href="(/pickles/\d+/\d+/\d+)"
+    intermediate_needs_hostname
+    searchpattern src="https://assets.amuniversal.com/(.*?)"
+    baseurl https://assets.amuniversal.com/
 end
 
 strip poorlydrawnlines
