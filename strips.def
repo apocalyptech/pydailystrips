@@ -234,8 +234,9 @@ strip dinosaur
     name Dinosaur Comics
     artist Ryan North
     homepage http://www.qwantz.com/index.php
-    searchpattern <img src="https?://www.qwantz.com/(comics/comic.*?\.png)"
+    searchpattern <img src="(comics/comic.*?\.png)" class="comic"
     baseurl http://www.qwantz.com/
+    extra_txt Title Text|class="comic" title="(.*?)"
 end
 
 strip foxtrot

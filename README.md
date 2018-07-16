@@ -140,3 +140,4 @@ TODO
 
 * Some kind of "archive" page would be nice - dailystrips had been linking to
   one which doesn't seem to have ever been updated...
+* Move "groups" definitions to their own file
