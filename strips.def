@@ -272,7 +272,7 @@ strip indexed
     artist Jessica Hagy
     homepage http://thisisindexed.com/
     searchpage http://thisisindexed.com/feed/
-    searchpattern <img.+?srcset=.+? https?://thisisindexed.com/(wp-content/uploads/\d+/\d+/card\d+\.(jpg|gif|png))
+    searchpattern <img.+?srcset=.+? https?://thisisindexed.com/(wp-content/uploads/\d+/\d+/morecards\d+-\d+x\d+\.(jpg|gif|png))
     baseurl $homepage
 end
 
