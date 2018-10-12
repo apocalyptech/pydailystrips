@@ -120,7 +120,6 @@
 group cj
     basicinstructions
     blindsprings
-    businesscat
     buttersafe
     calvinandhobbes
     dieselsweeties
@@ -139,6 +138,7 @@ group cj
     xkcd
     zits
     achewood
+    businesscat
     darkscience
     jsph
     nedroid
@@ -185,6 +185,7 @@ strip businesscat
     artist Tom Fonder
     homepage http://www.businesscat.happyjar.com/
     searchpattern img src="(https?://www.businesscat.happyjar.com/wp-content/uploads/\d+/\d+/\d+-\d+-\d+-\S+\.(jpg|gif|png))"
+    onhold
 end
 
 strip buttersafe
