@@ -119,7 +119,6 @@
 
 group cj
     basicinstructions
-    blindsprings
     buttersafe
     calvinandhobbes
     dieselsweeties
@@ -172,13 +171,6 @@ strip bc
     searchpattern src="https://assets.amuniversal.com/(.*?)"
     baseurl https://assets.amuniversal.com/
 end
-
-strip blindsprings
-    name Blindsprings
-    artist Kadi Fedoruk
-    homepage http://blindsprings.com/
-    searchpattern <div id="cc-comicbody"><img title=".*?" src="(https?://www.blindsprings.com/comics/\d+-TB_.*?\.(jpg|gif|png))" id="cc-comic"
-end 
 
 strip businesscat
     name The Adventures of Business Cat
