@@ -347,7 +347,7 @@ strip poorlydrawnlines
     name Poorly Drawn Lines
     artist Reza Farazmand
     homepage http://poorlydrawnlines.com/
-    searchpattern <img class=".+?size-full.+?src="(https?://(www\.)?poorlydrawnlines.com/wp-content/uploads/\d+/\d+/[0-9A-Za-z_\-]+\.png)" alt=
+    searchpattern <figure class="wp-block-image"><img src="(https?://(www\.)?poorlydrawnlines.com/wp-content/uploads/\d+/\d+/[0-9A-Za-z_\-]+\.png)" alt=
 end
 
 strip questionablecontent
