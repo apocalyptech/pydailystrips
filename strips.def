@@ -184,8 +184,7 @@ strip buttersafe
     name Buttersafe
     artist Alex Culang and Raynato Castro
     homepage http://buttersafe.com/
-    searchpattern <img src="https?://buttersafe.com/(comics/\d+-\d+-\d+-.*?\.(gif|jpg|png))"
-    baseurl $homepage
+    searchpattern <img src="(https?://(www\.)?buttersafe.com/comics/\d+-\d+-\d+-.*?\.(gif|jpg|png))"
 end
 
 strip calvinandhobbes
