@@ -30,6 +30,7 @@ import os
 import re
 import io
 import sys
+import html
 import jinja2
 import shutil
 import urllib
@@ -109,9 +110,9 @@ class Pattern(object):
             return None
         else:
             if self.is_image():
-                return '%s%s' % (self.baseurl, self.result)
+                return '%s%s' % (self.baseurl, html.unescape(self.result))
             else:
-                return self.result
+                return html.unescape(self.result)
 
     def get_error(self):
         """
