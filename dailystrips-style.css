@@ -39,9 +39,6 @@ BODY {
     font-style: italic;
 }
 
-#strip-img-dieselsweeties-main_strip {
-    max-width: 900px;
-}
-#strip-img-sfam-main_strip {
+.strip-img {
     max-width: 900px;
 }
