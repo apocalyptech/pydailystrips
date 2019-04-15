@@ -431,5 +431,5 @@ strip zits
     name Zits
     artist Jerry Scott and Jim Borgman
     homepage http://zitscomics.com/
-    searchpattern img src="(https://safr.king.*?)"
+    searchpattern data-comic-image-url="(https://safr.king.*?)"
 end
