@@ -361,7 +361,7 @@ strip redmeat
     name Redmeat
     artist Max Cannon
     homepage http://www.redmeat.com/max-cannon/FreshMeat
-    searchpattern img src="(https?://media\d+.fdncms.com/redmeat/imager/u/redmeat/\d+/.*?-?\d+-\d+-\d+\.(gif|jpg|png))"
+    searchpattern img src="(https?://media\d+.fdncms.com/redmeat/imager/u/redmeat/\d+/.*?-?\d{4}-?\d{2}-?\d{2}\.(gif|jpg|png))"
 end
 
 strip sinfest
