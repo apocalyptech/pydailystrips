@@ -137,7 +137,6 @@ group cj
     xkcd
     zits
     achewood
-    businesscat
     darkscience
     jsph
     nedroid
@@ -170,14 +169,6 @@ strip bc
     intermediate_needs_hostname
     searchpattern src="https://assets.amuniversal.com/(.*?)"
     baseurl https://assets.amuniversal.com/
-end
-
-strip businesscat
-    name The Adventures of Business Cat
-    artist Tom Fonder
-    homepage http://www.businesscat.happyjar.com/
-    searchpattern img src="(https?://www.businesscat.happyjar.com/wp-content/uploads/\d+/\d+/\d+-\d+-\d+-\S+\.(jpg|gif|png))"
-    onhold
 end
 
 strip buttersafe
