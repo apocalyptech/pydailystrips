@@ -127,7 +127,7 @@ class Pattern(object):
         """
         return (self.mode == Pattern.M_IMG)
 
-    def download_to(self, basedir, linkdir, now, referer=None, verbose=False, useragent=None):
+    def download_to(self, basedir, linkdir, now, referer=None, verbose=False, useragent=None, ca_certs=None):
         """
         Downloads ourself to the given directory.
         """
@@ -151,7 +151,10 @@ class Pattern(object):
         try:
             if verbose:
                 print(' * Fetching "%s" image at URL: %s' % (self.title, self.get_result()))
-            resp = requests.get(self.get_result(), headers=headers)
+            if ca_certs:
+                resp = requests.get(self.get_result(), headers=headers, verify=ca_certs)
+            else:
+                resp = requests.get(self.get_result(), headers=headers)
             if resp.status_code == 200:
                 new_image_data = resp.content
             else:
@@ -352,7 +355,7 @@ class Strip(object):
         for pattern in self.patterns:
             pattern.baseurl = self.baseurl
 
-    def fetch_html(self, verbose=False, useragent=None):
+    def fetch_html(self, verbose=False, useragent=None, ca_certs=None):
         """
         Fetches the searchpage and populates our result URLs
         """
@@ -367,7 +370,10 @@ class Strip(object):
             print('Fetching HTML page for %s (%s)' % (self.name, self.strip_id))
             print('URL is: %s' % (self.searchpage))
         try:
-            page_lines = requests.get(self.searchpage, headers=headers).text.splitlines()
+            if ca_certs:
+                page_lines = requests.get(self.searchpage, headers=headers, verify=ca_certs).text.splitlines()
+            else:
+                page_lines = requests.get(self.searchpage, headers=headers).text.splitlines()
         except Exception as e:
             self.error = 'ERROR: Unable to retrieve HTML for %s (%s) - %s: %s' % (
                 self.name, self.strip_id, self.searchpage, e)
@@ -425,7 +431,10 @@ class Strip(object):
             if verbose:
                 print('Fetching intermediate URL: %s' % (self.intermediate_url))
             try:
-                page_lines = requests.get(self.intermediate_url, headers=headers).text.splitlines()
+                if ca_certs:
+                    page_lines = requests.get(self.intermediate_url, headers=headers, verify=ca_certs).text.splitlines()
+                else:
+                    page_lines = requests.get(self.intermediate_url, headers=headers).text.splitlines()
             except Exception as e:
                 self.error = 'ERROR: Unable to retrieve intermediate HTML for %s (%s) - %s: %s' % (
                     self.name, self.strip_id, self.intermediate_url, e)
@@ -453,7 +462,7 @@ class Strip(object):
         if verbose:
             print('')
 
-    def download(self, basedir, now, verbose=False, useragent=None):
+    def download(self, basedir, now, verbose=False, useragent=None, ca_certs=None):
         """
         Downloads the strip (and all extras) into the given `basedir`.
         """
@@ -470,7 +479,8 @@ class Strip(object):
             pattern.download_to(real_basedir, self.name, now,
                 referer=self.searchpage,
                 verbose=verbose,
-                useragent=useragent)
+                useragent=useragent,
+                ca_certs=ca_certs)
             if not self.unchanged_since and pattern.unchanged_since:
                 self.unchanged_since = pattern.unchanged_since
 
@@ -587,12 +597,13 @@ class Collection(object):
     Our complete collection of strips
     """
 
-    def __init__(self, useragent, configfile, verbose=False):
+    def __init__(self, useragent, configfile, verbose=False, ca_certs=None):
         """
         Constructor.
         """
         self.verbose = verbose
         self.useragent = useragent
+        self.ca_certs = ca_certs
         self.strips = {}
         self.groups = {}
         self.now = datetime.datetime.today()
@@ -758,11 +769,12 @@ class Collection(object):
         Fetches and prints the strips
         """
         for strip in strips:
-            strip.fetch_html(verbose=self.verbose, useragent=self.useragent)
+            strip.fetch_html(verbose=self.verbose, useragent=self.useragent, ca_certs=self.ca_certs)
             if download_dir:
                 if not strip.error:
                     strip.download(verbose=self.verbose, useragent=self.useragent,
-                        basedir=download_dir, now=self.now)
+                        basedir=download_dir, now=self.now,
+                        ca_certs=self.ca_certs)
             else:
                 strip.print_strip_info()
 
@@ -898,6 +910,10 @@ if __name__ == '__main__':
         default='Mozilla/5.0 (X11; Linux x86_64; rv:51.0) Gecko/20100101 Firefox/51.0',
         help='User-Agent to use in HTTP headers when requesting pages')
 
+    parser.add_argument('--ca-certs',
+        type=str,
+        help='Use the specified CA bundle instead of python-requests\' own bundle')
+
     args = parser.parse_args()
 
     if not os.path.exists(args.config):
@@ -910,7 +926,8 @@ if __name__ == '__main__':
 
     collection = Collection(useragent=args.useragent,
         configfile=args.config,
-        verbose=args.verbose)
+        verbose=args.verbose,
+        ca_certs=args.ca_certs)
     if args.list:
         collection.list_all()
     elif args.strip:

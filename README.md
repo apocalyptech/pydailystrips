@@ -47,6 +47,7 @@ Complete `--help` output:
 
     usage: pydailystrips.py [-h] (-s STRIP | -g GROUP | -l) [-d DOWNLOAD_DIR]
                             [--css CSS_FILENAME] [-v] [-c CONFIG] [-u USERAGENT]
+                            [--ca-certs CA_CERTS]
 
     optional arguments:
       -h, --help            show this help message and exit
@@ -71,6 +72,8 @@ Complete `--help` output:
                             User-Agent to use in HTTP headers when requesting
                             pages (default: Mozilla/5.0 (X11; Linux x86_64;
                             rv:51.0) Gecko/20100101 Firefox/51.0)
+      --ca-certs CA_CERTS   Use the specified CA bundle instead of python-
+                            requests' own bundle (default: None)
 
     One of -s, -g, or -l is required.
 
@@ -134,6 +137,15 @@ you an idea of what elements are available.  I believe I've got just about every
 you'd care about in there, but let me know if I've missed anything that would be useful.
 For instance, the main strip image will have a CSS ID of `strip-img-<stripname>-main_strip`,
 and classes of `strip-img`, `strip-img-<stripname>`, and `strip-img-main_strip`.
+
+CA Certificates
+---------------
+
+By default, pydailystrips will use the CA bundle which comes with Python's "requests"
+module.  In the event that you need to talk to a server whose SSL issuer is not found,
+you can use the `--ca-certs` option to specify your own CA bundle to use.  As of
+June 15, 2019, this seems to be required to talk to www.comicskingdom.com (which hosts
+Zits), which is currently signed by `Go Daddy Secure Certificate Authority - G2`.
 
 TODO
 ----
