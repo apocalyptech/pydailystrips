@@ -378,7 +378,7 @@ strip sfam
     artist Jon Rosenberg
     homepage http://amultiverse.com/
     searchpage http://amultiverse.com/feed/
-    searchpattern src="(https?://i2.wp.com/amultiverse.com/wp-content/uploads/\d+/\d+/.*?\.(gif|jpg|png))\?fit
+    searchpattern src="(https?://i\d+.wp.com/amultiverse.com/wp-content/uploads/\d+/\d+/.*?\.(gif|jpg|png))\?fit
 end
 
 strip toothpastefordinner
