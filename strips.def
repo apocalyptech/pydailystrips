@@ -385,7 +385,7 @@ strip toothpastefordinner
     name Toothpaste For Dinner
     artist Drew Fairweather
     homepage http://www.toothpastefordinner.com/
-    searchpattern <img src="https?://toothpastefordinner.com/(\d{6}/.*?\.(gif|jpg|png))"
+    searchpattern <img src="https?://toothpastefordinner.com/(\d{6}/.*?(\.(gif|jpg|png))?)"
     baseurl $homepage
 end
 
