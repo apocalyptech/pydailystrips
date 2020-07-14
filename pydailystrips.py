@@ -97,7 +97,7 @@ class Pattern(object):
         for line in pagedata:
             match = search_re.search(line)
             if match:
-                self.result = match.group(1)
+                self.result = match.group('result')
                 return True
         self.error = 'Could not find "%s" pattern in HTML' % (self.title)
         return False
@@ -403,7 +403,7 @@ class Strip(object):
             for line in page_lines:
                 match = intermediate_re.search(line)
                 if match:
-                    self.found_intermediate = match.group(1)
+                    self.found_intermediate = match.group('result')
                     break
 
             if not self.found_intermediate:

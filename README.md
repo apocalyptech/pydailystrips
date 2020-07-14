@@ -86,8 +86,8 @@ To get a list of all supported strips and groups, use `-l` or `--list`
             Homepage: http://www.achewood.com
             Search Page: http://www.achewood.com
             Base URL: http://www.achewood.com
-            Main Strip pattern (Image): (/comic.php\?date=\d+)"
-            Title Text pattern (Text): <img src.*title="(.*?)"
+            Main Strip pattern (Image): (?P<result>/comic.php\?date=\d+)"
+            Title Text pattern (Text): <img src.*title="(?P<result>.*?)"
 
     ...
 
@@ -106,9 +106,9 @@ as an option - you'll get the results of the regex searches at the bottom:
             Homepage: http://www.smbc-comics.com/
             Search Page: http://www.smbc-comics.com/
             Base URL: http://www.smbc-comics.com/
-            Main Strip pattern (Image): (comics/[0-9-]+( \(\d+\))?\.(gif|jpg|png))"
-            Title Text pattern (Text): img title="(.*?)"
-            Votey pattern (Image): (comics/[0-9-]+( \(\d+\))?after\.(gif|jpg|png))'
+            Main Strip pattern (Image): (?P<result>comics/[0-9-]+( \(\d+\))?\.(gif|jpg|png))"
+            Title Text pattern (Text): img title="(?P<result>.*?)"
+            Votey pattern (Image): (?P<result>comics/[0-9-]+( \(\d+\))?after\.(gif|jpg|png))'
             ------
             Main Strip: http://www.smbc-comics.com/comics/1487000736-20170213.png
             Title Text: I really can&#39;t tell if this one will get hatemail or lovemail.
@@ -153,3 +153,5 @@ TODO
 * Some kind of "archive" page would be nice - dailystrips had been linking to
   one which doesn't seem to have ever been updated...
 * Move "groups" definitions to their own file
+* Proper pypi-compatible packaging/versioning would be nice, wouldn't it?
+
