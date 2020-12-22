@@ -196,7 +196,7 @@ strip darkscience
     artist Aaron Diaz
     homepage http://dresdencodak.com/
     searchpage http://dresdencodak.com/feed/
-    searchpattern <img.*src="(?P<result>https?://(www\.)?dresdencodak.com/wp-content/uploads/\d+/\d+/((\d+-\d+-\d+-)?d(ark_)?s(cience)?_.*|\d+|act_\d+)\.(jpg|png|gif))"
+    searchpattern <img.*src="(?P<result>https?://(www\.)?dresdencodak.com/wp-content/uploads/\d+/\d+/((\d+-\d+-\d+-)?d(ark_)?s(cience)?_?.*|\d+|act_\d+)\.(jpg|png|gif))"
     onhold
 end
 
