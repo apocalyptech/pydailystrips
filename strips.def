@@ -133,18 +133,18 @@ group cj
     poorlydrawnlines
     questionablecontent
     redmeat
-    sfam
     smbc
     toothpastefordinner
-    wondermark
     xkcd
     zits
     achewood
     darkscience
+    vagrant
     jsph
     nedroid
     pbf
-    vagrant
+    sfam
+    wondermark
 end
 
 strip achewood
@@ -382,6 +382,7 @@ strip sfam
     homepage http://amultiverse.com/
     searchpage http://amultiverse.com/feed/
     searchpattern src="(?P<result>https?://i\d+.wp.com/amultiverse.com/wp-content/uploads/\d+/\d+/.*?\.(gif|jpg|png))\?fit
+    onhold
 end
 
 strip toothpastefordinner
@@ -409,6 +410,7 @@ strip wondermark
     searchpattern <img src="https?://wondermark.com/(?P<result>c/\d+-\d+-\d+-.*?)"
     baseurl http://www.wondermark.com/
     extra_txt Title Text|<img src="https?://wondermark.com/c/\d+-\d+-\d+-.*?" alt="(?P<result>.*?)"
+    onhold
 end 
 
 strip xkcd
