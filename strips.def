@@ -134,6 +134,7 @@ group cj
     questionablecontent
     redmeat
     smbc
+    swords
     toothpastefordinner
     xkcd
     zits
@@ -383,6 +384,15 @@ strip sfam
     searchpage http://amultiverse.com/feed/
     searchpattern src="(?P<result>https?://i\d+.wp.com/amultiverse.com/wp-content/uploads/\d+/\d+/.*?\.(gif|jpg|png))\?fit
     onhold
+end
+
+strip swords
+    name Swords
+    artist Matthew J Wills
+    homepage https://swordscomic.com
+    baseurl $homepage
+    searchpattern <img id="comic-image".* src="(?P<result>/media/\w+?\.(gif|jpg|png))"
+    extra_txt Title Text|<img id="comic-image".* title="(?P<result>.*?)"
 end
 
 strip toothpastefordinner
