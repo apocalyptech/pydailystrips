@@ -348,7 +348,7 @@ strip questionablecontent
     name Questionable Content
     artist Jeph Jacques
     homepage https://www.questionablecontent.net
-    searchpattern <img.+?src="https?://www.questionablecontent.net(?P<result>/comics/\d+\.(png|gif|jpg))"
+    searchpattern <img.+?src="https?://www.questionablecontent.net(?P<result>/comics/[-0-9A-F]+\.(png|gif|jpg))"
     baseurl $homepage
 end
 
