@@ -125,7 +125,6 @@ group cj
     basicinstructions
     buttersafe
     calvinandhobbes
-    dieselsweeties
     dinosaur
     foxtrot
     indexed
@@ -140,6 +139,7 @@ group cj
     zits
     achewood
     darkscience
+    dieselsweeties
     vagrant
     jsph
     nedroid
@@ -207,6 +207,7 @@ strip dieselsweeties
     homepage http://dieselsweeties.com
     searchpattern <img class="xomic".+?src="(?P<result>/strips\d+/ds\d+\.(png|gif|jpg))"
     baseurl $homepage
+    onhold
 end
 
 strip dilbert
