@@ -418,9 +418,9 @@ strip wondermark
     artist David Malki
     homepage http://www.wondermark.com/
     searchpage http://feeds.feedburner.com/wondermark
-    searchpattern <img src="https?://wondermark.com/(?P<result>c/\d+-\d+-\d+-.*?)"
+    searchpattern src="https?://wondermark.com/(?P<result>c/\d+-\d+-\d+-.*?)"
     baseurl http://www.wondermark.com/
-    extra_txt Title Text|<img src="https?://wondermark.com/c/\d+-\d+-\d+-.*?" alt="(?P<result>.*?)"
+    extra_txt Title Text|src="https?://wondermark.com/c/\d+-\d+-\d+-.*?".*alt="(?P<result>.*?)"
     onhold
 end 
 
