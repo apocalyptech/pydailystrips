@@ -392,7 +392,7 @@ strip swords
     artist Matthew J Wills
     homepage https://swordscomic.com
     baseurl $homepage
-    searchpattern <img id="comic-image".* src="(?P<result>/media/\w+?\.(gif|jpg|png))"
+    searchpattern <img id="comic-image".* src="(?P<result>/media/Swords/images/\w+?\.(gif|jpg|png))"
     extra_txt Title Text|<img id="comic-image".* title="(?P<result>.*?)"
 end
 
