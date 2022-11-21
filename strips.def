@@ -230,10 +230,9 @@ end
 strip foxtrot
     name Foxtrot
     artist Bill Amend
-    homepage http://www.gocomics.com/foxtrot
-    intermediate_pattern data-link="comics" href="(?P<result>/foxtrot/\d+/\d+/\d+)"
-    intermediate_needs_hostname
-    searchpattern data-image="(?P<result>https://assets.amuniversal.com/[0-9a-f].+?)"
+    homepage https://foxtrot.com/feed/
+    intermediate_pattern <link>(?P<result>https?://(www\.)?foxtrot\.com/\d+/\d+/\d+/.*)</link>
+    searchpattern <img width="\d+" height="\d+" src="(?P<result>https?://(www\.)?foxtrot\.com/wp-content/uploads/\d+/\d+/.*\.(png|gif|jpg))" alt="
 end
 
 strip getfuzzy
