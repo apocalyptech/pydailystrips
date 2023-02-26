@@ -285,7 +285,7 @@ strip nedroid
     name Nedroid 
     artist Anthony Clark
     homepage http://nedroid.com/
-    searchpattern <img src="(?P<result>.*?//nedroid.*\.com/comics/\d+-\d+-\d+-.*?\.(png|jpg|gif))" alt=
+    searchpattern <img src="(?P<result>.*?//nedroid.*\.com/wp-content/uploads/\d+/\d+/\d+-\d+-\d+-.*?\.(png|jpg|gif))" alt=
     extra_txt Title Text|img src=.*title="(?P<result>.*?)"
     onhold
 end 
