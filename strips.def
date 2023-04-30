@@ -354,10 +354,10 @@ strip questionablecontent
 end
 
 strip redmeat
-    name Redmeat
+    name Red Meat
     artist Max Cannon
     homepage http://www.redmeat.com/max-cannon/FreshMeat
-    searchpattern img src="(?P<result>https?://media\d+.fdncms.com/redmeat/imager/u/redmeat/\d+/.*?-?\d{4}-?\d{2}-?\d{2}(-color)?\.(gif|jpg|png))"
+    searchpattern img src="(?P<result>https?://media\d+.(fdncms|redmeat).com/redmeat/imager/u/redmeat/\d+/.*?-?\d{4}-?\d{2}-?\d{2}(-color)?\.(gif|jpg|png))"
 end
 
 strip sinfest
