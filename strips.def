@@ -122,6 +122,7 @@
 # the code.
 
 group cj
+    achewood
     basicinstructions
     buttersafe
     calvinandhobbes
@@ -137,7 +138,6 @@ group cj
     toothpastefordinner
     xkcd
     zits
-    achewood
     darkscience
     dieselsweeties
     vagrant
@@ -149,13 +149,12 @@ group cj
 end
 
 strip achewood
-    name Achewood
+    name Achewood (Random)
     artist Chris Onstad
-    homepage http://www.achewood.com
-    searchpattern (?P<result>/comic.php\?date=\d+)"
+    homepage https://www.achewood.com
+    searchpattern <img class="comicImage" src="(?P<result>.*?/\d+\.(png|gif|jpg))"
     baseurl $homepage
-    extra_txt Title Text|<img src.*title="(?P<result>.*?)"
-    onhold
+    extra_txt Title Text|<img class="comicImage" .*title="(?P<result>.*?)"
 end 
 
 strip basicinstructions 
