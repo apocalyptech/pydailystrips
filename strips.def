@@ -415,11 +415,9 @@ end
 strip wondermark
     name Wondermark
     artist David Malki
-    homepage http://www.wondermark.com/
-    searchpage http://feeds.feedburner.com/wondermark
-    searchpattern src="https?://wondermark.com/(?P<result>c/\d+-\d+-\d+-.*?)"
-    baseurl http://www.wondermark.com/
-    extra_txt Title Text|src="https?://wondermark.com/c/\d+-\d+-\d+-.*?".*alt="(?P<result>.*?)"
+    homepage https://www.wondermark.com/
+    searchpage https://wondermark.com/feed/
+    searchpattern class=".*webcomicmedia.*src="(?P<result>https?://wondermark.com/wp-content/uploads/\d+/\d+/\d+-\d+-\d+-.*?\.(png|gif|jpg))"
     onhold
 end 
 
