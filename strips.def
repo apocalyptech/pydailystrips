@@ -130,6 +130,7 @@ group cj
     foxtrot
     indexed
     marriedtothesea
+    nedroid
     poorlydrawnlines
     questionablecontent
     redmeat
@@ -142,7 +143,6 @@ group cj
     dieselsweeties
     vagrant
     jsph
-    nedroid
     pbf
     sfam
     wondermark
@@ -284,9 +284,9 @@ strip nedroid
     name Nedroid 
     artist Anthony Clark
     homepage http://nedroid.com/
-    searchpattern <img src="(?P<result>.*?//nedroid.*\.com/wp-content/uploads/\d+/\d+/\d+-\d+-\d+-.*?\.(png|jpg|gif))" alt=
-    extra_txt Title Text|img src=.*title="(?P<result>.*?)"
-    onhold
+    searchpattern <img class="comic"\s+src ?= ?"(?P<result>comics\/ ?\d+-\d+-\d+-.*?\.(png|jpg|gif))"
+    extra_txt Title Text|^\s*title="(?P<result>.*?)"></a>
+    baseurl $homepage
 end 
 
 strip nonsequitur
