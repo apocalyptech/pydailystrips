@@ -130,7 +130,6 @@ group cj
     foxtrot
     indexed
     marriedtothesea
-    nedroid
     poorlydrawnlines
     questionablecontent
     redmeat
@@ -143,6 +142,7 @@ group cj
     dieselsweeties
     vagrant
     jsph
+    nedroid
     pbf
     sfam
     wondermark
@@ -287,6 +287,7 @@ strip nedroid
     searchpattern <img class="comic"\s+src ?= ?"(?P<result>comics\/ ?\d+-\d+-\d+-.*?\.(png|jpg|gif))"
     extra_txt Title Text|^\s*title="(?P<result>.*?)"></a>
     baseurl $homepage
+    onhold
 end 
 
 strip nonsequitur
