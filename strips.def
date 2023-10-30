@@ -418,7 +418,7 @@ strip wondermark
     artist David Malki
     homepage https://www.wondermark.com/
     searchpage https://wondermark.com/feed/
-    searchpattern class=".*webcomicmedia.*src="(?P<result>https?://wondermark.com/wp-content/uploads/\d+/\d+/\d+-\d+-\d+-.*?\.(png|gif|jpg))"
+    searchpattern class=".*webcomicmedia.*src="(?P<result>https?://wondermark.com/wp-content/uploads/\d+/\d+/\d+.*?\.(png|gif|jpg))"
     onhold
 end 
 
