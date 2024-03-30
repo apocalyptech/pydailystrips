@@ -431,9 +431,26 @@ strip xkcd
     extra_txt Title Text|<img src=.*title="(?P<result>.*?)"
 end
 
+# On 2024-02-29, the delivery format at comicskingdom.com was changed pretty
+# radically.  We'd need an intermediate_pattern now (the one listed here should
+# do), but then on the next page, they're delivering the comic with one image
+# per panel.  That's actually kind of clever, but the code currently does *not*
+# support that.  So for now I'm just redirecting to a third-party site for it.
+#strip zits
+#    name Zits
+#    artist Jerry Scott and Jim Borgman
+#    homepage https://www.comicskingdom.com/zits
+#    intermediate_pattern "comic_navigation" href="(?P<result>/zits/\d+-\d+-\d+")"
+#    intermediate_needs_hostname
+#    searchpattern <img id="theComicImage" (alt=".*?" )?src="(?P<result>https://safr.king.*?)"
+#end
+# Trying this without actually using an intermediate (just hardcoding the URL to
+# the frame used to render the comic)
 strip zits
     name Zits
     artist Jerry Scott and Jim Borgman
-    homepage https://www.comicskingdom.com/zits
-    searchpattern <img id="theComicImage" (alt=".*?" )?src="(?P<result>https://safr.king.*?)"
+    homepage https://www.usatoday.com/comics/?content_id=zts01&feat_name=zits
+    searchpage https://g-king.comicskingdom.net/v2/server/display.php?client_id=gannett&alacarte=no&host_origin=https://www.usatoday.com&host_path=/comics/&content_id=zts01
+    searchpattern "comic_frame" src="(?P<result>.*?\.(png|jpg|gif))"
 end
+
