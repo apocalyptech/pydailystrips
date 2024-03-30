@@ -136,6 +136,7 @@ group cj
     smbc
     swords
     toothpastefordinner
+    warandpeas
     xkcd
     zits
     darkscience
@@ -452,5 +453,13 @@ strip zits
     homepage https://www.usatoday.com/comics/?content_id=zts01&feat_name=zits
     searchpage https://g-king.comicskingdom.net/v2/server/display.php?client_id=gannett&alacarte=no&host_origin=https://www.usatoday.com&host_path=/comics/&content_id=zts01
     searchpattern "comic_frame" src="(?P<result>.*?\.(png|jpg|gif))"
+end
+
+strip warandpeas
+    name War and Peas
+    artist Jonathan Kunz and Elizabeth Pich
+    homepage https://warandpeas.com/tag/comics/
+    searchpage https://warandpeas.com/tag/comics/feed/
+    searchpattern data-orig-file="(?P<result>http.*?wp.com/warandpeas.com/wp-content/uploads/\d+/\d+/.*?\.(png|jpg|gif))\?
 end
 
