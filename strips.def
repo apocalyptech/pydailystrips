@@ -132,7 +132,6 @@ group cj
     marriedtothesea
     poorlydrawnlines
     questionablecontent
-    redmeat
     smbc
     swords
     toothpastefordinner
@@ -146,6 +145,7 @@ group cj
     jsph
     nedroid
     pbf
+    redmeat
     sfam
 end
 
@@ -359,6 +359,7 @@ strip redmeat
     artist Max Cannon
     homepage http://www.redmeat.com/max-cannon/FreshMeat
     searchpattern img src="(?P<result>https?://media\d+.(fdncms|redmeat).com/redmeat/imager/u/redmeat/\d+/.*?-?\d{4}-?\d{2}-?\d{2}(-color)?\.(gif|jpg|png))"
+    onhold
 end
 
 strip sinfest
