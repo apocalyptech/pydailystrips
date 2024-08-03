@@ -455,11 +455,25 @@ strip zits
     searchpattern "comic_frame" src="(?P<result>.*?\.(png|jpg|gif))"
 end
 
+# It's actually a bit difficult to reliably get the latest comic from the
+# site.  I'd orginally used the `comics` tag, but that omitted a few.  The
+# `comics` *category* is better, though it also includes various posts which
+# aren't actually comics.  The New Yorker-style cartoons are typically
+# posted in a `cartoons` category, so I'm requesting a combined category feed
+# here, now.  This is likely to pull up non-comic images occasionally; once
+# I see that again I'll look into figuring out some way around it.  The other
+# issue is that the way comics are posted isn't always consistent.  As I'm
+# writing, the current post actually has five comic images in a single post
+# (all from the same series), for instance.  At least once or twice, I've
+# also seen where a comic is posted with one image per frame (sometimes with
+# the "combined" image afterwards).  There's honestly probably not any good
+# way to normalize all these without writing some kind of proxy for the feed,
+# which is rather outside the scope of this app.
 strip warandpeas
     name War and Peas
     artist Jonathan Kunz and Elizabeth Pich
-    homepage https://warandpeas.com/tag/comics/
-    searchpage https://warandpeas.com/tag/comics/feed/
+    homepage https://warandpeas.com/
+    searchpage https://warandpeas.com/category/comics,cartoons/feed/
     searchpattern data-orig-file="(?P<result>http.*?wp.com/warandpeas.com/wp-content/uploads/\d+/\d+/.*?\.(png|jpg|gif))\?
 end
 
