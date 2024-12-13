@@ -305,7 +305,7 @@ strip pbf
     name Perry Bible Fellowship
     artist Nicholas Gurewitch
     homepage http://pbfcomics.com/
-    searchpattern <div id="comic"><img .* data-src=['"](?P<result>https?://(www\.)?pbfcomics\.com/wp-content/uploads/\d+/\d+/PBF.*?\.(png|jpg|gif))['"] class
+    searchpattern <div id="comic"><img\s+(.*\s+)?data-src=['"](?P<result>https?://(www\.)?pbfcomics\.com/wp-content/uploads/\d+/\d+/PBF.*?\.(png|jpg|gif))['"]\s+
     onhold
 end
 
