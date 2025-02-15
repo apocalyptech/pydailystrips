@@ -194,9 +194,9 @@ end
 strip darkscience
     name Dark Science
     artist A. Senna Diaz
-    homepage http://dresdencodak.com/
-    searchpage http://dresdencodak.com/feed/
-    searchpattern <img.*src="(?P<result>https?://(www\.)?dresdencodak.com/wp-content/uploads/\d+/\d+/((\d+-\d+-\d+-)?d(ark_)?s(cience)?_?.*|\d+|act_\d+)\.(jpg|png|gif))"
+    homepage https://dresdencodak.com/
+    searchpage https://dresdencodak.com/feed/
+    searchpattern <img.*src="(?P<result>https?://(www\.)?dresdencodak.com/wp-content/uploads/\d+/\d+/((\d+-\d+-\d+-)?d(ark_)?s(cience)?_?.*?|\d+|act_\d+)\.(jpg|png|gif))"
     onhold
 end
 
