@@ -64,6 +64,7 @@ class Pattern(object):
         'PNG': 'png',
         'JPEG': 'jpg',
         'GIF': 'gif',
+        'WEBP': 'webp',
     }
 
     def __init__(self, title, pattern, mode=1):
