@@ -184,11 +184,11 @@ end
 strip calvinandhobbes
     name Calvin and Hobbes
     artist Bill Watterson
-    homepage http://www.gocomics.com/calvinandhobbes/
+    homepage https://www.gocomics.com/calvinandhobbes/
     intermediate_pattern data-link="comics" href="(?P<result>/calvinandhobbes/\d+/\d+/\d+)"
     intermediate_needs_hostname
-    searchpattern src="https://assets.amuniversal.com/(?P<result>.*?)"
-    baseurl https://assets.amuniversal.com/
+    searchpattern src="https://featureassets.amuniversal.com/(?P<result>.*?)"
+    baseurl https://featureassets.amuniversal.com/
 end
 
 strip darkscience
