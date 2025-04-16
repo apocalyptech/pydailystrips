@@ -911,7 +911,7 @@ if __name__ == '__main__':
 
     parser.add_argument('-u', '--useragent',
         type=str,
-        default='Mozilla/5.0 (X11; Linux x86_64; rv:51.0) Gecko/20100101 Firefox/51.0',
+        default='Mozilla/5.0 (X11; Linux x86_64; rv:137.0) Gecko/20100101 Firefox/137.0',
         help='User-Agent to use in HTTP headers when requesting pages')
 
     parser.add_argument('--ca-certs',
