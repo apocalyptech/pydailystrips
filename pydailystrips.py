@@ -408,11 +408,14 @@ class Strip(object):
                     break
 
             if not self.found_intermediate:
-                self.error = 'ERROR: Unable to find intermediate URL'
+                self.error = 'ERROR: Unable to find intermediate URL for %s (%s)' % (
+                        self.name,
+                        self.strip_id,
+                        )
                 if verbose:
                     print(self.error)
                     print('')
-                    return
+                return
 
             # Figure out what the actual intermediate URL is
             if verbose:
