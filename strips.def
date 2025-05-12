@@ -232,6 +232,14 @@ strip foxtrot
     searchpattern <meta property="og:image" content="(?P<result>https?://(www\.)?foxtrot\.com/wp-content/uploads/\d+/\d+/.*\.(png|gif|jpg))" />
 end
 
+strip garfield
+    name Garfield
+    artist Jim Davis
+    homepage https://www.gocomics.com/garfield/
+    searchpage https://www.gocomics.com/garfield/%Y/%m/%d
+    searchpattern "url\\*":\\*"(?P<result>https://featureassets.gocomics.com/.*?)\\*"
+end
+
 strip getfuzzy
     name Get Fuzzy
     artist Darby Conley

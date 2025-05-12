@@ -366,6 +366,8 @@ class Strip(object):
         if useragent:
             headers['User-Agent'] = useragent
 
+        self.searchpage = datetime.date.today().strftime(self.searchpage)
+
         if verbose:
             print('------')
             print('Fetching HTML page for %s (%s)' % (self.name, self.strip_id))
