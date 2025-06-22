@@ -37,6 +37,7 @@ In addition to Python 3, pydailystrips requires the following Python modules:
 * Jinja2
 * Pillow
 * requests
+* python-dateutil *(technically optional)*
 
 pydailystrips assumes that you're running it on a system which supports symlinks.
 
@@ -47,7 +48,7 @@ Complete `--help` output:
 
     usage: pydailystrips.py [-h] (-s STRIP | -g GROUP | -l) [-d DOWNLOAD_DIR]
                             [--css CSS_FILENAME] [-v] [-c CONFIG] [-u USERAGENT]
-                            [--ca-certs CA_CERTS]
+                            [--ca-certs CA_CERTS] [--date DATE]
 
     optional arguments:
       -h, --help            show this help message and exit
@@ -74,6 +75,12 @@ Complete `--help` output:
                             rv:51.0) Gecko/20100101 Firefox/51.0)
       --ca-certs CA_CERTS   Use the specified CA bundle instead of python-
                             requests' own bundle (default: None)
+      --date DATE           Use the specified date as the base for saved strip
+                            filenames, "index" HTML filenames, and for strips
+                            whose search page includes date information. By
+                            default, pydailystrips will use today's date. Dates
+                            will be parsed using the dateutil library (default:
+                            None)
 
     One of -s, -g, or -l is required.
 
@@ -120,6 +127,25 @@ page), specify `-d` or `--download`:
 
     $ ./pydailystrips.py -g cj -d /var/www/htdocs/dailystrips
 
+When saving strips to disk, the current date is used as part of the filename, and as
+part of the filename of the main "index" file.  Additionally, some strips might include
+the date in the URL to retrieve the strip.  To use a specific date instead of today's
+date, for those cases, you can use the `--date` argument.  If the `python-dateutil`
+library is available, that will be used to parse the date, which will allow many
+different ways of specifying the date:
+
+    $ ./pydailystrips.py -s garfield --date 'june 21, 2025'
+
+If `python-dateutil` is *not* available, then the date format may only be specified
+in the form `YYYY-MM-DD`:
+
+    $ ./pydailystrips.py -s garfield --date '2025-05-21'
+
+Note that the vast majority of strips in the default set do *not* use dates in their
+search URLs, so even if you specify a date in the past, most strips will still always
+return the most recent strip.  (The only strip at time of writing which takes advantage
+of dates in its URLs is Garfield.)
+
 CSS Styling
 -----------
 
@@ -154,4 +180,18 @@ TODO
   one which doesn't seem to have ever been updated...
 * Move "groups" definitions to their own file
 * Proper pypi-compatible packaging/versioning would be nice, wouldn't it?
+
+CHANGELOG
+---------
+
+*(Note: I've never kept an actual changelog for this, but with some added functionality
+in June 2025, it seemed like well past the time to do so.)*
+
+**June 22, 2025**
+ - **Functional Changes**:
+   - Added support for strips whose URLs contain dates, courtesy Lars Kotthoff (PR #3)
+   - Added support for specifying which date to use in those URLs with the `--date` arg
+   - Added optional `python-dateutil` dependency for parsing dates specified in `--date`
+ - **Strip Definition Updates:**
+   - Added Garfield, courtesy Lars Kotthoff (PR #3)
 

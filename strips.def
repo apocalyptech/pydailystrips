@@ -43,6 +43,13 @@
 #       The page to actually search for the comic in.  If unspecified,
 #       this will default to the homepage.
 #
+#   uses_date
+#       This specifies that the searchpage includes date information.  The
+#       searchpage for this strip will be run through Python's
+#       `datetime.strftime` formatting:
+#       https://docs.python.org/3/library/datetime.html#strftime-and-strptime-format-codes
+#       See the `garfield` definition for an example.
+#
 #   intermediate_pattern
 #       Some strip pages will require an initial regex to load the
 #       actual page containing the strip image URL (gocomics.com
@@ -237,6 +244,7 @@ strip garfield
     artist Jim Davis
     homepage https://www.gocomics.com/garfield/
     searchpage https://www.gocomics.com/garfield/%Y/%m/%d
+    uses_date
     searchpattern "url\\*":\\*"(?P<result>https://featureassets.gocomics.com/.*?)\\*"
 end
 
