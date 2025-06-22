@@ -194,4 +194,5 @@ in June 2025, it seemed like well past the time to do so.)*
    - Added optional `python-dateutil` dependency for parsing dates specified in `--date`
  - **Strip Definition Updates:**
    - Added Garfield, courtesy Lars Kotthoff (PR #3)
+   - Fixed Calvin and Hobbes, which had been returning the same strip for some time now
 
