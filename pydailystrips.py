@@ -38,6 +38,14 @@ import datetime
 import argparse
 import requests
 import http.client
+try:
+    import dateutil
+    has_dateutil = True
+except ImportError:
+    print('WARNING: dateutil library not found; parsed dates in commandline args', file=sys.stderr)
+    print('         will be restricted to YYYY-MM-DD format', file=sys.stderr)
+    print('', file=sys.stderr)
+    has_dateutil = False
 
 from PIL import Image
 
@@ -279,7 +287,9 @@ class Strip(object):
     def __init__(self, strip_id, name=None, artist=None,
             homepage=None, searchpage=None,
             searchpattern=None, baseurl='',
-            onhold=False):
+            onhold=False,
+            uses_date=False,
+            ):
         self.strip_id = strip_id
         self.name = name
         self.artist = artist
@@ -288,6 +298,7 @@ class Strip(object):
             self.searchpage = searchpage
         else:
             self.searchpage = homepage
+        self.searchpage_date = None
         self.intermediate_pattern = None
         self.found_intermediate = None
         self.intermediate_url = None
@@ -300,6 +311,7 @@ class Strip(object):
         self.error = None
         self.fetch_attempted = False
         self.onhold = onhold
+        self.uses_date = uses_date
         self.unchanged_since = None
 
     def set_homepage(self, homepage):
@@ -356,7 +368,7 @@ class Strip(object):
         for pattern in self.patterns:
             pattern.baseurl = self.baseurl
 
-    def fetch_html(self, verbose=False, useragent=None, ca_certs=None):
+    def fetch_html(self, verbose=False, useragent=None, now=None, ca_certs=None):
         """
         Fetches the searchpage and populates our result URLs
         """
@@ -366,18 +378,31 @@ class Strip(object):
         if useragent:
             headers['User-Agent'] = useragent
 
+
         if verbose:
             print('------')
             print('Fetching HTML page for %s (%s)' % (self.name, self.strip_id))
             print('URL is: %s' % (self.searchpage))
+
+        if self.uses_date:
+            self.searchpage_date = now.strftime(self.searchpage)
+            if verbose:
+                if self.searchpage_date != self.searchpage:
+                    print(f'Processed URL is: {self.searchpage_date}')
+                else:
+                    print('(URL did not need date processing)')
+            url_to_fetch = self.searchpage_date
+        else:
+            url_to_fetch = self.searchpage
+
         try:
             if ca_certs:
-                page_lines = requests.get(self.searchpage, headers=headers, verify=ca_certs).text.splitlines()
+                page_lines = requests.get(url_to_fetch, headers=headers, verify=ca_certs).text.splitlines()
             else:
-                page_lines = requests.get(self.searchpage, headers=headers).text.splitlines()
+                page_lines = requests.get(url_to_fetch, headers=headers).text.splitlines()
         except Exception as e:
             self.error = 'ERROR: Unable to retrieve HTML for %s (%s) - %s: %s' % (
-                self.name, self.strip_id, self.searchpage, e)
+                self.name, self.strip_id, url_to_fetch, e)
             if verbose:
                 print(self.error)
                 print('')
@@ -422,9 +447,9 @@ class Strip(object):
                 print('Found intermediate link: %s' % (self.found_intermediate))
             if self.intermediate_relative or self.intermediate_needs_hostname:
                 if self.intermediate_relative:
-                    self.intermediate_url = '%s%s' % (self.searchpage, self.found_intermediate)
+                    self.intermediate_url = '%s%s' % (url_to_fetch, self.found_intermediate)
                 elif self.intermediate_needs_hostname:
-                    parsed = urllib.parse.urlparse(self.searchpage)
+                    parsed = urllib.parse.urlparse(url_to_fetch)
                     self.intermediate_url = '%s://%s%s' % (parsed.scheme, parsed.netloc,
                             self.found_intermediate)
                 if verbose:
@@ -478,10 +503,16 @@ class Strip(object):
                 print('Creating directory: %s' % (real_basedir))
             os.mkdir(real_basedir)
 
+        # Figure out which referrer to use
+        if self.searchpage_date is not None:
+            referer = self.searchpage_date
+        else:
+            referer = self.searchpage
+
         # Now loop through all our patterns
         for pattern in self.patterns:
             pattern.download_to(real_basedir, self.name, now,
-                referer=self.searchpage,
+                referer=referer,
                 verbose=verbose,
                 useragent=useragent,
                 ca_certs=ca_certs)
@@ -525,7 +556,11 @@ class Strip(object):
         if self.artist is not None:
             print("\tArtist: %s" % (self.artist))
         print("\tHomepage: %s" % (self.homepage))
-        print("\tSearch Page: %s" % (self.searchpage))
+        if self.uses_date:
+            print("\tSearch Page (pre-processed): %s" % (self.searchpage))
+            print("\tSearch Page (processed): %s" % (self.searchpage_date))
+        else:
+            print("\tSearch Page: %s" % (self.searchpage))
         print("\tBase URL: %s" % (self.baseurl))
         if self.intermediate_pattern:
             print("\tIntermediate Pattern: %s" % (self.intermediate_pattern))
@@ -601,16 +636,16 @@ class Collection(object):
     Our complete collection of strips
     """
 
-    def __init__(self, useragent, configfile, verbose=False, ca_certs=None):
+    def __init__(self, useragent, configfile, now, verbose=False, ca_certs=None):
         """
         Constructor.
         """
         self.verbose = verbose
         self.useragent = useragent
+        self.now = now
         self.ca_certs = ca_certs
         self.strips = {}
         self.groups = {}
-        self.now = datetime.datetime.today()
         self.load_from_filename(configfile)
 
         # Load in our Jinja2 template
@@ -681,6 +716,8 @@ class Collection(object):
                         if len(parts) == 1:
                             if parts[0] == 'onhold':
                                 cur_strip.onhold = True
+                            elif parts[0] == 'uses_date':
+                                cur_strip.uses_date = True
                             elif parts[0] == 'intermediate_relative':
                                 cur_strip.intermediate_relative = True
                             elif parts[0] == 'intermediate_needs_hostname':
@@ -773,7 +810,7 @@ class Collection(object):
         Fetches and prints the strips
         """
         for strip in strips:
-            strip.fetch_html(verbose=self.verbose, useragent=self.useragent, ca_certs=self.ca_certs)
+            strip.fetch_html(verbose=self.verbose, useragent=self.useragent, now=self.now, ca_certs=self.ca_certs)
             if download_dir:
                 if not strip.error:
                     strip.download(verbose=self.verbose, useragent=self.useragent,
@@ -918,6 +955,16 @@ if __name__ == '__main__':
         type=str,
         help='Use the specified CA bundle instead of python-requests\' own bundle')
 
+    if has_dateutil:
+        date_help_extra = 'Dates will be parsed using the dateutil library'
+    else:
+        date_help_extra = 'Dates must be specified in YYYY-MM-DD format'
+    parser.add_argument('--date',
+        type=str,
+        help=f"""Use the specified date as the base for saved strip filenames, "index"
+            HTML filenames, and for strips whose search page includes date information.
+            By default, pydailystrips will use today's date.  {date_help_extra}""")
+
     args = parser.parse_args()
 
     if not os.path.exists(args.config):
@@ -926,12 +973,28 @@ if __name__ == '__main__':
     if args.download and not os.path.exists(args.download):
         parser.error('Download directory "%s" does not exist' % (args.download))
 
+    # Parse the given date, if appropriate
+    parsed_date = datetime.datetime.today()
+    if args.date:
+        if has_dateutil:
+            try:
+                parsed_date = dateutil.parser.parse(args.date)
+            except Exception as e:
+                parser.error(f'Did not understand date: {e}')
+        else:
+            try:
+                parsed_date = datetime.datetime.strptime(args.date, '%Y-%m-%d')
+            except Exception as e:
+                parser.error(f'Did not understand date: {e}')
+
     # Now launch the app
 
     collection = Collection(useragent=args.useragent,
         configfile=args.config,
+        now=parsed_date,
         verbose=args.verbose,
-        ca_certs=args.ca_certs)
+        ca_certs=args.ca_certs,
+        )
     if args.list:
         collection.list_all()
     elif args.strip:
