@@ -194,6 +194,7 @@ in June 2025, it seemed like well past the time to do so.)*
    - Removed Calvin and Hobbes for now.  gocomics.com has introduced a WAF product which
      wil probably be effective in blocking casual scrapers like this one, and I don't
      feel like trying to figure out workarounds.
+   - Fixed Nedroid
 
 **June 22, 2025**
  - **Functional Changes**:
