@@ -132,7 +132,6 @@ group cj
     achewood
     basicinstructions
     buttersafe
-    calvinandhobbes
     dinosaur
     foxtrot
     indexed
@@ -188,12 +187,20 @@ strip buttersafe
     searchpattern <img src="(?P<result>https?://(www\.)?buttersafe.com/comics/\d+-\d+-\d+[- ].*?\.(gif|jpe?g|png))"
 end
 
-strip calvinandhobbes
-    name Calvin and Hobbes
-    artist Bill Watterson
-    homepage https://www.gocomics.com/calvinandhobbes/
-    searchpattern "url":"(?P<result>https://featureassets.gocomics.com/.*?)"
-end
+# In October 2025, gocomics.com apparently rolled out some WAF-like protection on
+# the site, presumably at least partly due to scrapers like this one.  They're using
+# bunny.net ( https://docs.bunny.net/ ) to do so, and the wrapper relies on the
+# browser having Javascript to actually redirect.  Spoofing a crawler useragent
+# wouldn't work either due to some reverse-DNS protections they've got.  It's
+# possible there's a way around this, but IMO it's honestly not worth the time to
+# investigate.  Just commenting for now; perhaps I'll remember to check this again
+# later to see if they've changed their setup.
+#strip calvinandhobbes
+#    name Calvin and Hobbes
+#    artist Bill Watterson
+#    homepage https://www.gocomics.com/calvinandhobbes/
+#    searchpattern "url":"(?P<result>https://featureassets.gocomics.com/.*?)"
+#end
 
 strip darkscience
     name Dark Science

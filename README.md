@@ -187,6 +187,14 @@ CHANGELOG
 *(Note: I've never kept an actual changelog for this, but with some added functionality
 in June 2025, it seemed like well past the time to do so.)*
 
+**October 9, 2025**
+ - **Functional Changes**:
+   - Updated default Useragent to something more recent
+ - **Strip Definition Updates:**
+   - Removed Calvin and Hobbes for now.  gocomics.com has introduced a WAF product which
+     wil probably be effective in blocking casual scrapers like this one, and I don't
+     feel like trying to figure out workarounds.
+
 **June 22, 2025**
  - **Functional Changes**:
    - Added support for strips whose URLs contain dates, courtesy Lars Kotthoff (PR #3)
