@@ -187,6 +187,10 @@ CHANGELOG
 *(Note: I've never kept an actual changelog for this, but with some added functionality
 in June 2025, it seemed like well past the time to do so.)*
 
+**October 20, 2025**
+ - **Strip Definition Updates:**
+   - Fixed War and Peas
+
 **October 9, 2025**
  - **Functional Changes**:
    - Updated default Useragent to something more recent

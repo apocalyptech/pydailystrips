@@ -492,6 +492,6 @@ strip warandpeas
     artist Jonathan Kunz and Elizabeth Pich
     homepage https://warandpeas.com/
     searchpage https://warandpeas.com/category/comics,cartoons/feed/
-    searchpattern data-orig-file="(?P<result>http.*?wp.com/warandpeas.com/wp-content/uploads/\d+/\d+/.*?\.(png|jpg|gif))\?
+    searchpattern data-orig-file="(?P<result>https://warandpeas.com/wp-content/uploads/\d+/\d+/.*?\.(png|jpg|gif))"
 end
 
