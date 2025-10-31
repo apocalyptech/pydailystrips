@@ -187,6 +187,12 @@ CHANGELOG
 *(Note: I've never kept an actual changelog for this, but with some added functionality
 in June 2025, it seemed like well past the time to do so.)*
 
+**October 31, 2025**
+ - **Strip Definition Updates:**
+   - Red Meat site got a revamp, and switching its definition to pull from their
+     "Mystery Meat" random strip link.  Will have to check occasionally to see if
+     Max ever starts posting new strips to the main page.
+
 **October 20, 2025**
  - **Strip Definition Updates:**
    - Fixed War and Peas

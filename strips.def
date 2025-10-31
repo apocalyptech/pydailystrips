@@ -138,6 +138,7 @@ group cj
     marriedtothesea
     poorlydrawnlines
     questionablecontent
+    redmeat
     smbc
     toothpastefordinner
     warandpeas
@@ -150,7 +151,6 @@ group cj
     jsph
     nedroid
     pbf
-    redmeat
     sfam
 end
 
@@ -372,12 +372,19 @@ strip questionablecontent
     baseurl $homepage
 end
 
+# New site as of October 2025
+# The alt text pattern here is "dangerous" in that it may end up matching other
+# text in the future.  It works at time of writing because the strip happens
+# to be the first image in the HTML which uses this specific rendering style,
+# but that could change.  Time will tell!
 strip redmeat
-    name Red Meat
+    name Red Meat (Random)
     artist Max Cannon
-    homepage http://www.redmeat.com/max-cannon/FreshMeat
-    searchpattern img src="(?P<result>https?://media\d*.(fdncms|redmeat).com/redmeat/imager/u/redmeat/\d+/.*?-?\d{4}-?\d{2}-?\d{2}(-color)?\.(gif|jpg|png))"
-    onhold
+    homepage https://www.redmeat.com/
+    searchpage https://www.redmeat.com/mystery
+    searchpattern src="(?P<result>/images/\d+/\d+-\d+-.*?\.(webp|gif|jpg|png))"
+    baseurl $homepage
+    extra_txt Title Text|^\s*alt="(?P<result>.*?)"\s*$
 end
 
 strip sinfest
