@@ -191,6 +191,7 @@ in June 2025, it seemed like well past the time to do so.)*
  - **Strip Definition Updates:**
    - Fixed SMBC Comics (possibly just for some recent comics which have a little ad
      for SMBC books at the bottom)
+   - Fixed Wondermark
 
 **October 31, 2025**
  - **Strip Definition Updates:**
