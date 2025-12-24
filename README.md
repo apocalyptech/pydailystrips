@@ -187,6 +187,11 @@ CHANGELOG
 *(Note: I've never kept an actual changelog for this, but with some added functionality
 in June 2025, it seemed like well past the time to do so.)*
 
+**December 24, 2025**
+ - **Strip Definition Updates:**
+   - Fixed SMBC Comics (possibly just for some recent comics which have a little ad
+     for SMBC books at the bottom)
+
 **October 31, 2025**
  - **Strip Definition Updates:**
    - Red Meat site got a revamp, and switching its definition to pull from their
