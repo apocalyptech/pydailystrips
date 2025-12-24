@@ -184,8 +184,10 @@ TODO
 CHANGELOG
 ---------
 
-*(Note: I've never kept an actual changelog for this, but with some added functionality
-in June 2025, it seemed like well past the time to do so.)*
+*(Note: Prior to mid-2025, I never kept an actual changelog for this, so for
+history prior to that you'd have to rely on commit comments.  When I added some
+functionality in June 2025, though, it seemed like well past the time to keep
+track more formally.)*
 
 **December 24, 2025**
  - **Strip Definition Updates:**
