@@ -189,6 +189,10 @@ history prior to that you'd have to rely on commit comments.  When I added some
 functionality in June 2025, though, it seemed like well past the time to keep
 track more formally.)*
 
+**December 28, 2025**
+ - **Strip Definition Updates:**
+   - Fixed SMBC Comics again
+
 **December 24, 2025**
  - **Strip Definition Updates:**
    - Fixed SMBC Comics (possibly just for some recent comics which have a little ad

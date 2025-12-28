@@ -399,7 +399,7 @@ strip smbc
     name SMBC Comics
     artist Zach Weinersmith
     homepage http://www.smbc-comics.com/
-    searchpattern (?P<result>comics/[0-9-]+([-_][a-zA-Z0-9_-]+)?(bonus\d+?)?( \(\d+\))?( - Edit)?\.(gif|jpg|png|webp))"
+    searchpattern (?P<result>comics/[0-9-]+([-_][a-zA-Z0-9_-]+)?(bonus\d+?)?( \(\d+\))?( - [Ee][Dd][Ii][Tt])?\.(gif|jpg|png|webp))"
     baseurl $homepage
     extra_txt Title Text|img title="(?P<result>.*?)"
     extra_img Votey|(?P<result>comics/[0-9-]+([-_]?[a-zA-Z0-9_-]+)?after(bonus\d+?)?( \(\d+\))?\.(gif|jpg|png|webp))'
