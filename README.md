@@ -189,6 +189,11 @@ history prior to that you'd have to rely on commit comments.  When I added some
 functionality in June 2025, though, it seemed like well past the time to keep
 track more formally.)*
 
+**September 15, 2026**
+ - **Strip Definition Updates:**
+   - Fixed XKCD title-text extraction; had been pulling text from a header image
+     for awhile now.
+
 **December 28, 2025**
  - **Strip Definition Updates:**
    - Fixed SMBC Comics again
