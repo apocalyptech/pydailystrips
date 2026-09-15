@@ -368,7 +368,7 @@ class Strip(object):
         for pattern in self.patterns:
             pattern.baseurl = self.baseurl
 
-    def fetch_html(self, verbose=False, useragent=None, now=None, ca_certs=None):
+    def fetch_html(self, verbose=False, useragent=None, now=None, ca_certs=None, write_html=None):
         """
         Fetches the searchpage and populates our result URLs
         """
@@ -473,6 +473,20 @@ class Strip(object):
                 return
             if verbose:
                 print('Intermediate HTML successfully retrieved, starting on matches')
+
+        # If we've been told to write out our HTML, do so
+        if write_html:
+            write_filename = write_html
+            num = 0
+            while os.path.exists(write_filename):
+                num += 1
+                write_filename = f'{write_html}.{num}'
+            if write_html != write_filename:
+                print(f'WARNING: "{write_html}" already exists, writing to "{write_filename}" intead')
+            with open(write_filename, 'w') as odf:
+                for line in page_lines:
+                    print(line, file=odf)
+            print(f'Wrote HTML contents to: {write_filename}')
 
         # Run our matches
         for pattern in self.patterns:
@@ -636,7 +650,7 @@ class Collection(object):
     Our complete collection of strips
     """
 
-    def __init__(self, useragent, configfile, now, verbose=False, ca_certs=None):
+    def __init__(self, useragent, configfile, now, verbose=False, ca_certs=None, write_html=None):
         """
         Constructor.
         """
@@ -644,6 +658,7 @@ class Collection(object):
         self.useragent = useragent
         self.now = now
         self.ca_certs = ca_certs
+        self.write_html = write_html
         self.strips = {}
         self.groups = {}
         self.load_from_filename(configfile)
@@ -810,7 +825,7 @@ class Collection(object):
         Fetches and prints the strips
         """
         for strip in strips:
-            strip.fetch_html(verbose=self.verbose, useragent=self.useragent, now=self.now, ca_certs=self.ca_certs)
+            strip.fetch_html(verbose=self.verbose, useragent=self.useragent, now=self.now, ca_certs=self.ca_certs, write_html=self.write_html)
             if download_dir:
                 if not strip.error:
                     strip.download(verbose=self.verbose, useragent=self.useragent,
@@ -965,6 +980,11 @@ if __name__ == '__main__':
             HTML filenames, and for strips whose search page includes date information.
             By default, pydailystrips will use today's date.  {date_help_extra}""")
 
+    parser.add_argument('-w', '--write-html',
+        type=str,
+        metavar='FILENAME',
+        help="Write the HTML content of the page to be searched out to the specified filename")
+
     args = parser.parse_args()
 
     if not os.path.exists(args.config):
@@ -994,6 +1014,7 @@ if __name__ == '__main__':
         now=parsed_date,
         verbose=args.verbose,
         ca_certs=args.ca_certs,
+        write_html=args.write_html,
         )
     if args.list:
         collection.list_all()

@@ -48,7 +48,7 @@ Complete `--help` output:
 
     usage: pydailystrips.py [-h] (-s STRIP | -g GROUP | -l) [-d DOWNLOAD_DIR]
                             [--css CSS_FILENAME] [-v] [-c CONFIG] [-u USERAGENT]
-                            [--ca-certs CA_CERTS] [--date DATE]
+                            [--ca-certs CA_CERTS] [--date DATE] [-w FILENAME]
 
     optional arguments:
       -h, --help            show this help message and exit
@@ -81,6 +81,9 @@ Complete `--help` output:
                             default, pydailystrips will use today's date. Dates
                             will be parsed using the dateutil library (default:
                             None)
+      -w FILENAME, --write-html FILENAME
+                            Write the HTML content of the page to be searched out
+                            to the specified filename (default: None)
 
     One of -s, -g, or -l is required.
 
@@ -190,6 +193,9 @@ functionality in June 2025, though, it seemed like well past the time to keep
 track more formally.)*
 
 **September 15, 2026**
+ - **Functional Changes**:
+   - Added `-w`/`--write-html` option to write out the page-to-be-searched as
+     a file
  - **Strip Definition Updates:**
    - Fixed XKCD title-text extraction; had been pulling text from a header image
      for awhile now.
