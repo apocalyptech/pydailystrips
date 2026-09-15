@@ -194,6 +194,7 @@ track more formally.)*
    - Fixed XKCD title-text extraction; had been pulling text from a header image
      for awhile now.
    - Fixed Poorly Drawn Lines
+   - Fixed Zits
 
 **December 28, 2025**
  - **Strip Definition Updates:**
