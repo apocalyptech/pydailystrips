@@ -242,7 +242,7 @@ strip foxtrot
     homepage https://foxtrot.com/
     searchpage https://foxtrot.com/feed/
     intermediate_pattern <link>(?P<result>https?://(www\.)?foxtrot\.com/\d+/\d+/\d+/.*)</link>
-    searchpattern <meta property="og:image" content="(?P<result>https?://(www\.)?foxtrot\.com/wp-content/uploads/\d+/\d+/.*\.(png|gif|jpg))" />
+    searchpattern <img fetchpriority="high".*src="(?P<result>https?://(www\.)?foxtrot\.com/wp-content/uploads/\d+/\d+/.*\.(png|gif|jpg))"
 end
 
 strip garfield

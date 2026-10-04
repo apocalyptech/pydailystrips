@@ -192,6 +192,10 @@ history prior to that you'd have to rely on commit comments.  When I added some
 functionality in June 2025, though, it seemed like well past the time to keep
 track more formally.)*
 
+**October 4, 2026**
+ - **Strip Definition Updates:**
+  - Fixed Foxtrot
+
 **September 15, 2026**
  - **Functional Changes**:
    - Added `-w`/`--write-html` option to write out the page-to-be-searched as
